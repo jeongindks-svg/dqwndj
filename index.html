@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>주배당 통장</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#173A40">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="주배당 통장">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
+<style>
+:root{
+  --bg:#E6EEEB; --paper:#F7FBF9; --ink:#173A40; --muted:#5F7B77; --rule:#C6D6D1;
+  --red:#D2343A; --red-soft:#F6D9DA; --blue:#2F6FB5; --cell0:#DCE7E3;
+  --shadow:0 1px 0 rgba(23,58,64,.08);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1E1D; --paper:#172A29; --ink:#E1EDEA; --muted:#8FA8A4; --rule:#2C4442;
+    --red:#FF6A6A; --red-soft:#4A2324; --blue:#7FB0EA; --cell0:#213634; --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1E1D; --paper:#172A29; --ink:#E1EDEA; --muted:#8FA8A4; --rule:#2C4442;
+  --red:#FF6A6A; --red-soft:#4A2324; --blue:#7FB0EA; --cell0:#213634; --shadow:none;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:-apple-system,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+  font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.num{font-variant-numeric:tabular-nums}
+.wrap{max-width:560px;margin:0 auto;padding:16px 16px 110px}
+header.top{display:flex;align-items:baseline;justify-content:space-between;padding:8px 2px 14px}
+header.top h1{font-size:19px;margin:0;font-weight:700;letter-spacing:-.01em}
+header.top .sync{font-size:12px;color:var(--muted)}
+.card{background:var(--paper);border:1px solid var(--rule);border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.hero .label{font-size:13px;color:var(--muted)}
+.hero .big{font-size:34px;font-weight:700;letter-spacing:-.02em;line-height:1.15;margin:2px 0 4px;color:var(--red)}
+.hero .sub{font-size:13px;color:var(--muted)}
+.strip{display:grid;grid-template-columns:repeat(13,1fr);gap:4px;margin-top:16px}
+.strip .c{aspect-ratio:1;border-radius:4px;background:var(--cell0);position:relative}
+.strip .c.now{outline:2px solid var(--ink);outline-offset:1px}
+.strip-legend{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:6px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{padding:12px;border:1px solid var(--rule);border-radius:10px;background:var(--paper)}
+.stat .k{font-size:12px;color:var(--muted)}
+.stat .v{font-size:18px;font-weight:600;margin-top:2px}
+h2{font-size:15px;margin:0 0 10px;font-weight:600}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;border-top:1px solid var(--rule)}
+.row:first-of-type{border-top:none}
+.row .l{min-width:0}
+.row .t{font-weight:600}
+.row .s{font-size:12px;color:var(--muted)}
+.row .r{text-align:right;white-space:nowrap}
+.row .amt{font-weight:600;color:var(--red)}
+.weekhead{font-size:12px;color:var(--muted);padding:14px 2px 4px;display:flex;justify-content:space-between}
+.empty{text-align:center;color:var(--muted);padding:26px 8px;font-size:14px}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);padding:10px 14px}
+button.primary{background:var(--ink);color:var(--paper);border-color:var(--ink);font-weight:600}
+button.ghost{background:transparent}
+button.danger{color:var(--red);border-color:var(--red-soft)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap}
+.btnrow button{flex:1}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--paper);border-top:1px solid var(--rule);
+  padding-bottom:env(safe-area-inset-bottom,0px);z-index:10}
+nav.tabs .in{max-width:560px;margin:0 auto;display:flex}
+nav.tabs button{flex:1;border:none;border-radius:0;background:transparent;padding:12px 4px 10px;color:var(--muted);font-size:13px}
+nav.tabs button[aria-selected="true"]{color:var(--ink);font-weight:700;box-shadow:inset 0 3px 0 var(--red)}
+.fab{position:fixed;right:max(16px,calc(50% - 264px));bottom:calc(72px + env(safe-area-inset-bottom,0px));z-index:11;
+  border-radius:999px;padding:14px 20px;background:var(--red);color:#fff;border:none;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+label.f{display:block;font-size:13px;color:var(--muted);margin:10px 0 4px}
+input,select{font:inherit;width:100%;padding:10px 12px;border:1px solid var(--rule);border-radius:10px;background:var(--bg);color:var(--ink)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sheet-bg{position:fixed;inset:0;background:rgba(10,25,25,.45);z-index:20;display:none;align-items:flex-end;justify-content:center}
+.sheet-bg.open{display:flex}
+.sheet{background:var(--paper);width:100%;max-width:560px;border-radius:18px 18px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));
+  max-height:88vh;overflow:auto;animation:up .22s ease-out}
+@keyframes up{from{transform:translateY(24px);opacity:.4}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.sheet{animation:none}}
+.sheet h3{margin:0 0 4px;font-size:17px}
+.sheet .hint{font-size:13px;color:var(--muted);margin:0 0 8px}
+.batch-item{border-top:1px solid var(--rule);padding:10px 0}
+.batch-item .top{display:flex;justify-content:space-between;align-items:center}
+.batch-item .calc{font-size:12px;color:var(--muted);margin-top:4px}
+.chk{display:flex;align-items:center;gap:8px;font-weight:600}
+.chk input{width:18px;height:18px}
+.preview{margin-top:12px;padding:10px 12px;border-radius:10px;background:var(--red-soft);font-size:14px}
+.seg{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden}
+.seg button{flex:1;border:none;border-radius:0;padding:8px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.chart{overflow-x:auto}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(130px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--paper);
+  padding:10px 16px;border-radius:999px;font-size:14px;z-index:30;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.show{opacity:1}
+.tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:6px;border:1px solid var(--rule);color:var(--muted);margin-left:4px;vertical-align:1px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top"><h1>주배당 통장</h1><span class="sync" id="sync">불러오는 중…</span></header>
+  <main id="view"></main>
+</div>
+<button class="fab" id="fab">+ 이번 주 배당</button>
+<nav class="tabs"><div class="in" role="tablist">
+  <button role="tab" data-tab="home" aria-selected="true">요약</button>
+  <button role="tab" data-tab="log" aria-selected="false">기록</button>
+  <button role="tab" data-tab="hold" aria-selected="false">종목</button>
+  <button role="tab" data-tab="set" aria-selected="false">설정</button>
+</div></nav>
+<div class="sheet-bg" id="sheetBg"><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+const LS_KEY = "weekly-div-journal-v1";
+const DEFAULT = { settings:{ fx:1380, taxUS:15, taxKR:15.4 }, holdings:[], entries:[] };
+let S = JSON.parse(JSON.stringify(DEFAULT));
+let tab = "home";
+let db = null, docRef = null, downloads = null;
+let saveTimer = null;
+
+// ---------- utils ----------
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const uid = () => Math.random().toString(36).slice(2,10) + Date.now().toString(36);
+const won = n => "₩" + Math.round(n).toLocaleString("ko-KR");
+const usd = n => "$" + (Math.round(n*100)/100).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+const todayStr = () => { const d=new Date(); d.setMinutes(d.getMinutes()-d.getTimezoneOffset()); return d.toISOString().slice(0,10); };
+const parseD = s => { const [y,m,d]=s.split("-").map(Number); return new Date(y,m-1,d); };
+const fmtD = d => `${d.getMonth()+1}/${d.getDate()}`;
+function monday(d){ const x=new Date(d); const day=(x.getDay()+6)%7; x.setDate(x.getDate()-day); x.setHours(0,0,0,0); return x; }
+const weekKey = s => { const m=monday(parseD(s)); return m.getFullYear()+"-"+String(m.getMonth()+1).padStart(2,"0")+"-"+String(m.getDate()).padStart(2,"0"); };
+
+function calc(e){
+  const gross = e.perShare * e.shares;
+  const tax = gross * (e.taxRate/100);
+  const net = gross - tax;
+  const fx = e.currency === "KRW" ? 1 : e.fx;
+  return { gross, tax, net, netKRW: net * fx, grossKRW: gross*fx };
+}
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove("show"),1800); }
+
+// ---------- persistence ----------
+function loadLocal(){ try{ const r=localStorage.getItem(LS_KEY); if(r){ const p=JSON.parse(r); if(p&&p.entries) S=Object.assign({},DEFAULT,p); } }catch(e){} }
+function saveLocal(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(S)); }catch(e){} }
+function setSync(t){ $("#sync").textContent = t; }
+function persist(){
+  saveLocal();
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(async ()=>{
+    if(!docRef){ setSync("이 기기에 저장됨"); return; }
+    try{ await docRef.set(JSON.parse(JSON.stringify(S))); setSync("저장됨"); }
+    catch(e){
+      if(e && e.code==="unavailable"){ setTimeout(()=>docRef.set(JSON.parse(JSON.stringify(S))).then(()=>setSync("저장됨")).catch(()=>setSync("이 기기에만 저장됨")), 1200+Math.random()*800); }
+      else setSync("이 기기에만 저장됨");
+    }
+  }, 700);
+}
+async function connect(){
+  setSync(S.entries.length||S.holdings.length ? "이 기기에 저장됨" : "");
+}
+
+// ---------- aggregates ----------
+function sorted(){ return [...S.entries].sort((a,b)=> b.date.localeCompare(a.date) || (b.created||0)-(a.created||0)); }
+function byWeek(){
+  const m = new Map();
+  for(const e of S.entries){ const k=weekKey(e.date); m.set(k,(m.get(k)||0)+calc(e).netKRW); }
+  return m;
+}
+function lastPerShare(ticker){
+  const e = sorted().find(x=>x.ticker===ticker);
+  return e ? e.perShare : "";
+}
+
+// ---------- views ----------
+function viewHome(){
+  const now = new Date(), y = now.getFullYear();
+  const wk = byWeek();
+  let ytd=0, month=0, total=0;
+  for(const e of S.entries){
+    const v=calc(e).netKRW, d=parseD(e.date); total+=v;
+    if(d.getFullYear()===y){ ytd+=v; if(d.getMonth()===now.getMonth()) month+=v; }
+  }
+  // recent 4 weeks average (completed weeks incl. current)
+  const thisMon = monday(now);
+  let last4=0; for(let i=0;i<4;i++){ const m=new Date(thisMon); m.setDate(m.getDate()-7*i); last4 += wk.get(weekKey(isoOf(m)))||0; }
+  const avg = last4/4;
+  // 52-week strip for this year
+  const jan1 = new Date(y,0,1), start = monday(jan1);
+  const cells=[]; let max=0;
+  for(let i=0;i<52;i++){ const m=new Date(start); m.setDate(m.getDate()+7*i); const v=wk.get(weekKey(isoOf(m)))||0; cells.push({m,v}); if(v>max)max=v; }
+  const paidWeeks = cells.filter(c=>c.v>0).length;
+  const strip = cells.map(c=>{
+    const a = max? Math.max(.18, c.v/max):0;
+    const isNow = monday(now).getTime()===c.m.getTime();
+    const bg = c.v>0 ? `background:color-mix(in srgb, var(--red) ${Math.round(a*100)}%, var(--cell0))` : "";
+    return `<div class="c${isNow?" now":""}" style="${bg}" title="${fmtD(c.m)} 주 · ${won(c.v)}"></div>`;
+  }).join("");
+
+  // by ticker this year
+  const byT = {};
+  for(const e of S.entries){ if(parseD(e.date).getFullYear()!==y) continue; byT[e.ticker]=(byT[e.ticker]||0)+calc(e).netKRW; }
+  const tRows = Object.entries(byT).sort((a,b)=>b[1]-a[1]).map(([t,v])=>
+    `<div class="row"><div class="l"><div class="t">${esc(t)}</div><div class="s">${ytd?Math.round(v/ytd*100):0}%</div></div><div class="r num amt">${won(v)}</div></div>`).join("");
+
+  return `
+  <section class="card hero">
+    <div class="label">${y}년 받은 배당 (세후)</div>
+    <div class="big num">${won(ytd)}</div>
+    <div class="sub">배당 들어온 주 ${paidWeeks}주 / 52주</div>
+    <div class="strip" aria-label="${y}년 주별 배당">${strip}</div>
+    <div class="strip-legend"><span>1월</span><span>6월</span><span>12월</span></div>
+  </section>
+  <section class="stats">
+    <div class="stat"><div class="k">이번 달</div><div class="v num">${won(month)}</div></div>
+    <div class="stat"><div class="k">최근 4주 평균 / 주</div><div class="v num">${won(avg)}</div></div>
+    <div class="stat"><div class="k">연 환산 예상</div><div class="v num">${won(avg*52)}</div></div>
+    <div class="stat"><div class="k">월 환산 예상</div><div class="v num">${won(avg*52/12)}</div></div>
+  </section>
+  <section class="card" style="margin-top:14px">
+    <h2>최근 12주 흐름</h2>
+    ${chart12(wk)}
+  </section>
+  <section class="card">
+    <h2>종목별 (${y}년)</h2>
+    ${tRows || `<div class="empty">아직 기록이 없어요. 아래 버튼으로 첫 배당을 기록해 보세요.</div>`}
+  </section>
+  <p class="s" style="font-size:12px;color:var(--muted);text-align:center">누적 총 배당 ${won(total)}</p>`;
+}
+function isoOf(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function chart12(wk){
+  const thisMon = monday(new Date());
+  const pts=[]; for(let i=11;i>=0;i--){ const m=new Date(thisMon); m.setDate(m.getDate()-7*i); pts.push({m,v:wk.get(isoOf(m))||0}); }
+  const max = Math.max(1,...pts.map(p=>p.v));
+  const W=520,H=150,pad=22,bw=(W-pad)/12;
+  const bars = pts.map((p,i)=>{
+    const h = p.v? Math.max(3,(p.v/max)*(H-40)) : 0;
+    const x = pad/2 + i*bw + bw*.18, w=bw*.64, yy=H-22-h;
+    return `<rect x="${x}" y="${yy}" width="${w}" height="${h}" rx="3" fill="var(--red)" opacity="${i===11?1:.72}"><title>${fmtD(p.m)} 주: ${won(p.v)}</title></rect>
+      ${i%2===1||i===11?`<text x="${x+w/2}" y="${H-6}" font-size="11" text-anchor="middle" fill="var(--muted)">${fmtD(p.m)}</text>`:""}`;
+  }).join("");
+  return `<div class="chart"><svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="최근 12주 배당 막대그래프">
+    <line x1="0" x2="${W}" y1="${H-22}" y2="${H-22}" stroke="var(--rule)"/>${bars}</svg></div>`;
+}
+
+function viewLog(){
+  const list = sorted();
+  if(!list.length) return `<div class="card empty">기록이 없어요.<br>‘+ 이번 주 배당’을 눌러 보유 종목의 배당을 한 번에 기록할 수 있어요.</div>`;
+  const groups = new Map();
+  for(const e of list){ const k=weekKey(e.date); if(!groups.has(k)) groups.set(k,[]); groups.get(k).push(e); }
+  let html="";
+  for(const [k,arr] of groups){
+    const sum = arr.reduce((a,e)=>a+calc(e).netKRW,0);
+    const m=parseD(k), end=new Date(m); end.setDate(end.getDate()+6);
+    html += `<div class="weekhead"><span>${m.getFullYear()}년 ${fmtD(m)} – ${fmtD(end)}</span><span class="num">${won(sum)}</span></div><div class="card" style="padding:4px 16px">`;
+    html += arr.map(e=>{ const c=calc(e);
+      return `<div class="row" data-edit="${e.id}" style="cursor:pointer"><div class="l"><div class="t">${esc(e.ticker)}<span class="tag">${fmtD(parseD(e.date))}</span></div>
+      <div class="s num">${e.currency==="KRW"?won(e.perShare):"$"+e.perShare} × ${e.shares}주 · 세금 ${e.taxRate}%${e.memo?" · "+esc(e.memo):""}</div></div>
+      <div class="r"><div class="num amt">${won(c.netKRW)}</div><div class="s num">${e.currency==="KRW"?"":usd(c.net)}</div></div></div>`;}).join("");
+    html += `</div>`;
+  }
+  return html + `<div class="btnrow" style="margin-top:14px"><button id="addOne" class="ghost">개별 기록 추가</button></div>`;
+}
+
+function viewHold(){
+  const rows = S.holdings.map(h=>`<div class="row" data-hold="${h.id}" style="cursor:pointer"><div class="l"><div class="t">${esc(h.ticker)}<span class="tag">${h.currency}</span></div>
+    <div class="s">${esc(h.freq||"주배당")}${h.payday?" · "+esc(h.payday):""}</div></div><div class="r num">${h.shares.toLocaleString()}주</div></div>`).join("");
+  return `<section class="card"><h2>보유 종목</h2>${rows||`<div class="empty">종목을 등록하면 매주 수량을 다시 입력하지 않아도 돼요.</div>`}</section>
+  <div class="btnrow"><button class="primary" id="addHold">종목 추가</button></div>`;
+}
+
+function viewSet(){
+  return `<section class="card"><h2>기본값</h2>
+    <label class="f" for="sfx">원/달러 환율</label><input id="sfx" type="number" inputmode="decimal" step="0.01" value="${S.settings.fx}">
+    <div class="grid2">
+      <div><label class="f" for="stu">미국 배당세 (%)</label><input id="stu" type="number" inputmode="decimal" step="0.1" value="${S.settings.taxUS}"></div>
+      <div><label class="f" for="stk">국내 배당세 (%)</label><input id="stk" type="number" inputmode="decimal" step="0.1" value="${S.settings.taxKR}"></div>
+    </div>
+    <div class="btnrow" style="margin-top:14px"><button class="primary" id="saveSet">기본값 저장</button></div>
+  </section>
+  <section class="card"><h2>내보내기</h2>
+    <p class="s" style="font-size:13px;color:var(--muted);margin:0 0 10px">엑셀이나 구글 시트에서 열 수 있는 CSV로 저장해요.</p>
+    <div class="btnrow"><button id="csv">CSV 내보내기</button></div>
+  </section>
+  <section class="card"><h2>백업 · 복원</h2>
+    <p class="s" style="font-size:13px;color:var(--muted);margin:0 0 10px">기록은 이 기기의 브라우저에만 저장돼요. 브라우저 데이터를 지우거나 기기를 바꾸기 전에 백업 파일을 저장해 두세요.</p>
+    <div class="btnrow"><button id="bkFile">백업 파일 저장</button><button id="bkLoad">백업 파일 열기</button></div><div class="btnrow" style="margin-top:8px"><button id="bkCopy" class="ghost">백업 코드 복사</button><button id="bkRestore" class="ghost">코드로 복원</button></div><input type="file" id="bkIn" accept=".json,application/json,text/plain" hidden>
+  </section>
+  <section class="card"><h2>초기화</h2><div class="btnrow"><button class="danger" id="wipe">모든 기록 삭제</button></div></section>`;
+}
+
+function render(){
+  const v = $("#view");
+  v.innerHTML = tab==="home"?viewHome():tab==="log"?viewLog():tab==="hold"?viewHold():viewSet();
+  document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-selected", b.dataset.tab===tab));
+  bindView();
+}
+
+// ---------- sheets ----------
+function openSheet(html, bind){ $("#sheet").innerHTML = html; $("#sheetBg").classList.add("open"); bind && bind(); const f=$("#sheet").querySelector("input,select,button"); f&&f.focus(); }
+function closeSheet(){ $("#sheetBg").classList.remove("open"); }
+$("#sheetBg").addEventListener("click", e=>{ if(e.target.id==="sheetBg") closeSheet(); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") closeSheet(); });
+
+function taxFor(cur){ return cur==="KRW"? S.settings.taxKR : S.settings.taxUS; }
+
+function batchSheet(){
+  if(!S.holdings.length){
+    openSheet(`<h3>먼저 종목을 등록해 주세요</h3><p class="hint">보유 종목과 수량을 등록해 두면, 매주 주당 배당금만 입력해서 한 번에 기록할 수 있어요.</p>
+      <div class="btnrow"><button class="ghost" id="bx">닫기</button><button class="primary" id="bgo">종목 추가</button></div>`,
+      ()=>{ $("#bx").onclick=closeSheet; $("#bgo").onclick=()=>holdSheet(); });
+    return;
+  }
+  const items = S.holdings.map(h=>`<div class="batch-item" data-h="${h.id}">
+    <div class="top"><label class="chk"><input type="checkbox" checked> ${esc(h.ticker)}</label><span class="s num" style="font-size:12px;color:var(--muted)">${h.shares.toLocaleString()}주</span></div>
+    <div class="grid2"><div><label class="f">주당 배당 (${h.currency==="KRW"?"원":"$"})</label><input class="ps" type="number" inputmode="decimal" step="any" value="${lastPerShare(h.ticker)}" placeholder="0.00"></div>
+    <div><label class="f">수량</label><input class="sh" type="number" inputmode="decimal" step="any" value="${h.shares}"></div></div>
+    <div class="calc num"></div></div>`).join("");
+  openSheet(`<h3>이번 주 배당 기록</h3><p class="hint">지난번 주당 배당금을 미리 채워 뒀어요. 달라진 금액만 고쳐 주세요.</p>
+    <div class="grid2"><div><label class="f" for="bd">입금일</label><input id="bd" type="date" value="${todayStr()}"></div>
+    <div><label class="f" for="bfx">환율</label><input id="bfx" type="number" inputmode="decimal" step="0.01" value="${S.settings.fx}"></div></div>
+    ${items}
+    <div class="preview num" id="bsum"></div>
+    <div class="btnrow" style="margin-top:14px"><button class="ghost" id="bx">취소</button><button class="primary" id="bsave">기록 저장</button></div>`, ()=>{
+      const upd = ()=>{
+        let tot=0; const fx=+$("#bfx").value||0;
+        $("#sheet").querySelectorAll(".batch-item").forEach(el=>{
+          const h=S.holdings.find(x=>x.id===el.dataset.h); const on=el.querySelector("input[type=checkbox]").checked;
+          const ps=+el.querySelector(".ps").value||0, sh=+el.querySelector(".sh").value||0;
+          const c=calc({perShare:ps,shares:sh,taxRate:taxFor(h.currency),fx,currency:h.currency});
+          el.querySelector(".calc").textContent = ps? `세후 ${h.currency==="KRW"?"":usd(c.net)+" · "}${won(c.netKRW)}` : "";
+          el.style.opacity = on?1:.45; if(on) tot+=c.netKRW;
+        });
+        $("#bsum").textContent = `이번 주 세후 합계 ${won(tot)}`;
+      };
+      $("#sheet").addEventListener("input", upd); upd();
+      $("#bx").onclick=closeSheet;
+      $("#bsave").onclick=()=>{
+        const date=$("#bd").value||todayStr(), fx=+$("#bfx").value||S.settings.fx; let n=0;
+        $("#sheet").querySelectorAll(".batch-item").forEach(el=>{
+          if(!el.querySelector("input[type=checkbox]").checked) return;
+          const h=S.holdings.find(x=>x.id===el.dataset.h);
+          const ps=+el.querySelector(".ps").value, sh=+el.querySelector(".sh").value;
+          if(!(ps>0) || !(sh>0)) return;
+          S.entries.push({id:uid(),created:Date.now(),date,ticker:h.ticker,perShare:ps,shares:sh,taxRate:taxFor(h.currency),fx,currency:h.currency,memo:""});
+          if(sh!==h.shares) h.shares=sh; n++;
+        });
+        if(!n){ toast("주당 배당금을 입력해 주세요"); return; }
+        S.settings.fx = fx; persist(); closeSheet(); render(); toast(`${n}건 기록했어요`);
+      };
+    });
+}
+
+function entrySheet(id){
+  const e = id? S.entries.find(x=>x.id===id) : null;
+  const h0 = S.holdings[0];
+  const cur = e? e.currency : (h0?h0.currency:"USD");
+  const tickers = [...new Set([...S.holdings.map(h=>h.ticker), ...S.entries.map(x=>x.ticker)])];
+  openSheet(`<h3>${e?"기록 수정":"배당 기록"}</h3>
+    <label class="f" for="et">종목</label><input id="et" list="tl" value="${esc(e?e.ticker:(h0?h0.ticker:""))}" placeholder="예: SPYI" autocapitalize="characters">
+    <datalist id="tl">${tickers.map(t=>`<option value="${esc(t)}">`).join("")}</datalist>
+    <div class="grid2"><div><label class="f" for="ed">입금일</label><input id="ed" type="date" value="${e?e.date:todayStr()}"></div>
+    <div><label class="f">통화</label><div class="seg" id="ec"><button type="button" data-c="USD" aria-pressed="${cur==="USD"}">USD</button><button type="button" data-c="KRW" aria-pressed="${cur==="KRW"}">KRW</button></div></div></div>
+    <div class="grid2"><div><label class="f" for="ep">주당 배당</label><input id="ep" type="number" inputmode="decimal" step="any" value="${e?e.perShare:""}"></div>
+    <div><label class="f" for="es">수량</label><input id="es" type="number" inputmode="decimal" step="any" value="${e?e.shares:(h0?h0.shares:"")}"></div></div>
+    <div class="grid2"><div><label class="f" for="ex">세율 (%)</label><input id="ex" type="number" inputmode="decimal" step="0.1" value="${e?e.taxRate:taxFor(cur)}"></div>
+    <div><label class="f" for="ef">환율</label><input id="ef" type="number" inputmode="decimal" step="0.01" value="${e?e.fx:S.settings.fx}"></div></div>
+    <label class="f" for="em">메모</label><input id="em" value="${esc(e?e.memo:"")}" placeholder="선택">
+    <div class="preview num" id="epv"></div>
+    <div class="btnrow" style="margin-top:14px">${e?`<button class="danger" id="edel">삭제</button>`:""}<button class="ghost" id="ecx">취소</button><button class="primary" id="esv">저장</button></div>`, ()=>{
+      let c = cur;
+      const upd=()=>{ const r=calc({perShare:+$("#ep").value||0,shares:+$("#es").value||0,taxRate:+$("#ex").value||0,fx:+$("#ef").value||0,currency:c});
+        $("#epv").textContent = `세전 ${c==="KRW"?won(r.gross):usd(r.gross)} → 세후 ${won(r.netKRW)}`; $("#ef").disabled = c==="KRW"; };
+      $("#ec").onclick = ev=>{ const b=ev.target.closest("button"); if(!b) return; c=b.dataset.c;
+        $("#ec").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed", x.dataset.c===c)); $("#ex").value=taxFor(c); upd(); };
+      $("#et").addEventListener("change", ()=>{ const h=S.holdings.find(x=>x.ticker===$("#et").value.trim().toUpperCase()); if(h){ $("#es").value=h.shares; c=h.currency;
+        $("#ec").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed", x.dataset.c===c)); $("#ex").value=taxFor(c); if(!$("#ep").value) $("#ep").value=lastPerShare(h.ticker); upd(); } });
+      $("#sheet").addEventListener("input", upd); upd();
+      $("#ecx").onclick=closeSheet;
+      if(e) $("#edel").onclick=()=>{ if(!confirm("이 기록을 삭제할까요?")) return; S.entries=S.entries.filter(x=>x.id!==e.id); persist(); closeSheet(); render(); toast("삭제했어요"); };
+      $("#esv").onclick=()=>{
+        const t=$("#et").value.trim().toUpperCase(), ps=+$("#ep").value, sh=+$("#es").value;
+        if(!t||!(ps>0)||!(sh>0)){ toast("종목, 주당 배당, 수량을 입력해 주세요"); return; }
+        const rec={date:$("#ed").value||todayStr(),ticker:t,perShare:ps,shares:sh,taxRate:+$("#ex").value||0,fx:+$("#ef").value||S.settings.fx,currency:c,memo:$("#em").value.trim()};
+        if(e) Object.assign(e,rec); else S.entries.push(Object.assign({id:uid(),created:Date.now()},rec));
+        persist(); closeSheet(); render(); toast("저장했어요");
+      };
+    });
+}
+
+function holdSheet(id){
+  const h = id? S.holdings.find(x=>x.id===id) : null;
+  const cur = h? h.currency : "USD";
+  openSheet(`<h3>${h?"종목 수정":"종목 추가"}</h3>
+    <label class="f" for="ht">티커 / 종목명</label><input id="ht" value="${esc(h?h.ticker:"")}" placeholder="예: SPYI, QQQI, YMAX" autocapitalize="characters">
+    <div class="grid2"><div><label class="f" for="hs">보유 수량</label><input id="hs" type="number" inputmode="decimal" step="any" value="${h?h.shares:""}"></div>
+    <div><label class="f">통화</label><div class="seg" id="hc"><button type="button" data-c="USD" aria-pressed="${cur==="USD"}">USD</button><button type="button" data-c="KRW" aria-pressed="${cur==="KRW"}">KRW</button></div></div></div>
+    <div class="grid2"><div><label class="f" for="hf">지급 주기</label><select id="hf">${["주배당","월배당","분기배당"].map(f=>`<option ${h&&h.freq===f?"selected":""}>${f}</option>`).join("")}</select></div>
+    <div><label class="f" for="hp">지급 요일 (선택)</label><input id="hp" value="${esc(h?h.payday||"":"")}" placeholder="예: 금요일"></div></div>
+    <div class="btnrow" style="margin-top:14px">${h?`<button class="danger" id="hdel">삭제</button>`:""}<button class="ghost" id="hcx">취소</button><button class="primary" id="hsv">저장</button></div>`, ()=>{
+      let c=cur;
+      $("#hc").onclick=ev=>{ const b=ev.target.closest("button"); if(!b) return; c=b.dataset.c; $("#hc").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x.dataset.c===c)); };
+      $("#hcx").onclick=closeSheet;
+      if(h) $("#hdel").onclick=()=>{ if(!confirm("종목을 삭제할까요? 지난 배당 기록은 남아 있어요.")) return; S.holdings=S.holdings.filter(x=>x.id!==h.id); persist(); closeSheet(); render(); };
+      $("#hsv").onclick=()=>{
+        const t=$("#ht").value.trim().toUpperCase(), sh=+$("#hs").value;
+        if(!t||!(sh>0)){ toast("티커와 수량을 입력해 주세요"); return; }
+        const rec={ticker:t,shares:sh,currency:c,freq:$("#hf").value,payday:$("#hp").value.trim()};
+        if(h) Object.assign(h,rec); else S.holdings.push(Object.assign({id:uid()},rec));
+        persist(); closeSheet(); tab="hold"; render(); toast("저장했어요");
+      };
+    });
+}
+
+// ---------- export ----------
+function saveFile(name, text, type){
+  const blob=new Blob([text],{type}); const url=URL.createObjectURL(blob);
+  const a=document.createElement("a"); a.href=url; a.download=name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 4000); toast("파일을 저장했어요");
+}
+async function exportCSV(){
+  const head=["입금일","주차(월요일)","종목","통화","주당배당","수량","세전","세율(%)","세금","세후","환율","세후(원)","메모"];
+  const rows = [...S.entries].sort((a,b)=>a.date.localeCompare(b.date)).map(e=>{ const c=calc(e);
+    return [e.date,weekKey(e.date),e.ticker,e.currency,e.perShare,e.shares,c.gross.toFixed(4),e.taxRate,c.tax.toFixed(4),c.net.toFixed(4),e.currency==="KRW"?1:e.fx,Math.round(c.netKRW),e.memo||""]; });
+  const csv = "\uFEFF" + [head,...rows].map(r=>r.map(v=>{ const s=String(v); return /[",\n]/.test(s)?`"${s.replace(/"/g,'""')}"`:s; }).join(",")).join("\n");
+  saveFile(`배당일지_${todayStr()}.csv`, csv, "text/csv;charset=utf-8");
+}
+
+// ---------- backup ----------
+function backupSheet(){
+  const code = JSON.stringify(S);
+  openSheet(`<h3>백업 코드</h3><p class="hint">아래 코드 전체를 복사해 안전한 곳에 보관하세요. 복원할 때 그대로 붙여 넣으면 돼요.</p>
+    <textarea id="bkt" readonly style="width:100%;height:160px;font:12px/1.4 ui-monospace,Menlo,monospace;padding:10px;border:1px solid var(--rule);border-radius:10px;background:var(--bg);color:var(--ink)">${esc(code)}</textarea>
+    <div class="btnrow" style="margin-top:12px"><button class="ghost" id="bkx">닫기</button><button class="primary" id="bkc">복사</button></div>`, ()=>{
+      $("#bkx").onclick=closeSheet;
+      $("#bkc").onclick=async()=>{ const t=$("#bkt"); try{ await navigator.clipboard.writeText(t.value); toast("복사했어요"); }catch(e){ t.focus(); t.select(); toast("선택된 코드를 길게 눌러 복사하세요"); } };
+    });
+}
+function restoreSheet(){
+  openSheet(`<h3>백업에서 복원</h3><p class="hint">복원하면 지금 이 브라우저의 기록은 백업 내용으로 바뀌어요.</p>
+    <textarea id="rst" placeholder="백업 코드를 붙여 넣으세요" style="width:100%;height:160px;font:12px/1.4 ui-monospace,Menlo,monospace;padding:10px;border:1px solid var(--rule);border-radius:10px;background:var(--bg);color:var(--ink)"></textarea>
+    <div class="btnrow" style="margin-top:12px"><button class="ghost" id="rsx">취소</button><button class="primary" id="rsv">복원</button></div>`, ()=>{
+      $("#rsx").onclick=closeSheet;
+      $("#rsv").onclick=()=>{
+        try{ const p=JSON.parse($("#rst").value.trim());
+          if(!p || !Array.isArray(p.entries) || !Array.isArray(p.holdings)) throw 0;
+          S=Object.assign({},DEFAULT,p); S.settings=Object.assign({},DEFAULT.settings,p.settings||{});
+          persist(); closeSheet(); tab="home"; render(); toast("복원했어요");
+        }catch(e){ toast("백업 코드 형식이 맞지 않아요"); }
+      };
+    });
+}
+
+// ---------- bindings ----------
+function bindView(){
+  const v=$("#view");
+  v.querySelectorAll("[data-edit]").forEach(r=>r.onclick=()=>entrySheet(r.dataset.edit));
+  v.querySelectorAll("[data-hold]").forEach(r=>r.onclick=()=>holdSheet(r.dataset.hold));
+  const a=$("#addOne"); if(a) a.onclick=()=>entrySheet();
+  const ah=$("#addHold"); if(ah) ah.onclick=()=>holdSheet();
+  const ss=$("#saveSet"); if(ss) ss.onclick=()=>{ S.settings.fx=+$("#sfx").value||S.settings.fx; S.settings.taxUS=+$("#stu").value; S.settings.taxKR=+$("#stk").value; persist(); toast("기본값을 저장했어요"); };
+  const cv=$("#csv"); if(cv) cv.onclick=exportCSV;
+  const bf=$("#bkFile"); if(bf) bf.onclick=()=>saveFile(`배당일지_백업_${todayStr()}.json`, JSON.stringify(S), "application/json");
+  const bl=$("#bkLoad"), bi=$("#bkIn"); if(bl){ bl.onclick=()=>bi.click(); bi.onchange=async()=>{ const f=bi.files[0]; if(!f) return;
+    try{ const p=JSON.parse(await f.text()); if(!p||!Array.isArray(p.entries)||!Array.isArray(p.holdings)) throw 0;
+      if(!confirm("지금 기록을 백업 파일 내용으로 바꿀까요?")) return;
+      S=Object.assign({},DEFAULT,p); S.settings=Object.assign({},DEFAULT.settings,p.settings||{}); persist(); tab="home"; render(); toast("복원했어요");
+    }catch(e){ toast("백업 파일 형식이 맞지 않아요"); } bi.value=""; }; }
+  const bc=$("#bkCopy"); if(bc) bc.onclick=backupSheet;
+  const br=$("#bkRestore"); if(br) br.onclick=restoreSheet;
+  const w=$("#wipe"); if(w) w.onclick=()=>{ if(!confirm("모든 종목과 배당 기록을 삭제할까요? 되돌릴 수 없어요.")) return; S=JSON.parse(JSON.stringify(DEFAULT)); persist(); render(); toast("모두 삭제했어요"); };
+}
+document.querySelectorAll("nav.tabs button").forEach(b=>b.onclick=()=>{ tab=b.dataset.tab; render(); window.scrollTo(0,0); });
+$("#fab").onclick=batchSheet;
+
+loadLocal();
+setSync(S.entries.length? "이 기기에 저장됨" : "");
+render();
+connect();
+})();
+</script>
+<script>
+if("serviceWorker" in navigator && location.protocol.startsWith("http")){
+  window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+}
+</script>
+</body>
+</html>
