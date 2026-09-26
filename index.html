@@ -30,12 +30,38 @@
   --bg:#0F1E1D; --paper:#172A29; --ink:#E1EDEA; --muted:#8FA8A4; --rule:#2C4442;
   --red:#FF6A6A; --red-soft:#4A2324; --blue:#7FB0EA; --blue-soft:#1E3550; --cell0:#213634; --shadow:none;
 }
-/* ---- 추가 테마: 밤하늘 ---- */
-:root[data-palette="navy"]{ --bg:#E9ECF3; --paper:#FAFBFE; --ink:#1C2A4A; --muted:#62708F; --rule:#CBD2E2; --blue:#3B5BDB; --blue-soft:#DEE4FA; --cell0:#DDE2EE; }
-@media (prefers-color-scheme: dark){ :root[data-palette="navy"]:not([data-theme="light"]){ --bg:#0E1424; --paper:#161E33; --ink:#E4E9F5; --muted:#8F9BB8; --rule:#2A3552; --blue:#8EA6FF; --blue-soft:#243154; --cell0:#1F2942; } }
-/* ---- 추가 테마: 라벤더 ---- */
-:root[data-palette="plum"]{ --bg:#EFEAF3; --paper:#FCFAFE; --ink:#3B2550; --muted:#7A6A8A; --rule:#DACFE4; --blue:#6A4FC2; --blue-soft:#E7E0F7; --cell0:#E6DDEE; }
-@media (prefers-color-scheme: dark){ :root[data-palette="plum"]:not([data-theme="light"]){ --bg:#1A1322; --paper:#231A2E; --ink:#EDE4F5; --muted:#A395B3; --rule:#3A2D4A; --blue:#B49BFF; --blue-soft:#33264A; --cell0:#2B2138; } }
+/* ---- 추가 테마: 토스 스타일 ---- */
+:root[data-palette="toss"]{ --bg:#F2F4F6; --paper:#FFFFFF; --ink:#191F28; --muted:#8B95A1; --rule:#E5E8EB; --red:#F04452; --red-soft:#FDE8EA; --blue:#3182F6; --blue-soft:#E8F3FF; --cell0:#EEF1F4; --shadow:none; --accent:#3182F6; --accent-fg:#fff; --btn:#3182F6; --btn-fg:#fff; }
+@media (prefers-color-scheme: dark){ :root[data-palette="toss"]:not([data-theme="light"]){ --bg:#101013; --paper:#1D1D22; --ink:#F2F2F5; --muted:#8E8E98; --rule:#2B2B33; --red:#F2545F; --red-soft:#3A1F23; --blue:#4D94FF; --blue-soft:#17263D; --cell0:#26262D; } }
+:root[data-palette="toss"] .card{border-color:transparent;border-radius:20px}
+:root[data-palette="toss"] .stat{border-color:transparent;background:var(--bg);border-radius:14px}
+:root[data-palette="toss"] .hero .big{color:var(--ink)}
+/* ---- 추가 테마: 카카오페이 스타일 ---- */
+:root[data-palette="kakao"]{ --bg:#F6F6F6; --paper:#FFFFFF; --ink:#191919; --muted:#8A8A8A; --rule:#E8E8E8; --red:#FF5A4F; --red-soft:#FFE7E5; --blue:#3C7CF0; --blue-soft:#E7EFFD; --cell0:#EFEFEF; --shadow:none; --accent:#FEE500; --accent-fg:#191919; --btn:#FEE500; --btn-fg:#191919; }
+@media (prefers-color-scheme: dark){ :root[data-palette="kakao"]:not([data-theme="light"]){ --bg:#121212; --paper:#1E1E1E; --ink:#EDEDED; --muted:#9A9A9A; --rule:#2E2E2E; --red:#FF6B61; --red-soft:#3D2220; --blue:#6A9BFF; --blue-soft:#1E2A40; --cell0:#2A2A2A; } }
+:root[data-palette="kakao"] .card{border-color:transparent;border-radius:16px}
+:root[data-palette="kakao"] .hero{background:var(--accent);color:#191919}
+:root[data-palette="kakao"] .hero .label,:root[data-palette="kakao"] .hero .sub,:root[data-palette="kakao"] .hero .muted,:root[data-palette="kakao"] .hero .strip-legend{color:rgba(25,25,25,.65)}
+:root[data-palette="kakao"] .hero .big{color:#191919}
+:root[data-palette="kakao"] .hero .strip .c{background:rgba(25,25,25,.10)}
+:root[data-palette="kakao"] .hero .bar{background:rgba(25,25,25,.12)}
+:root[data-palette="kakao"] .hero .bar > span{background:#191919}
+:root[data-palette="kakao"] .hero .stat{background:rgba(255,255,255,.55);border-color:transparent}
+:root[data-palette="kakao"] .hero .stat .v{color:#191919}
+/* 공통 추가 */
+.chips{display:flex;gap:8px;overflow-x:auto;padding:0 0 12px;-webkit-overflow-scrolling:touch}
+.chips button{flex:none;border-radius:999px;padding:7px 14px;font-size:14px}
+.chips button[aria-pressed="true"]{background:var(--btn,var(--ink));color:var(--btn-fg,var(--paper));border-color:var(--btn,var(--ink));font-weight:600}
+.chg{font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap}
+.chg.up{color:var(--red)} .chg.down{color:var(--blue)}
+.tbl{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:14px}
+.tbl table{border-collapse:collapse;width:100%;font-size:13px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tbl th,.tbl td{padding:9px 10px;border-bottom:1px solid var(--rule);text-align:right}
+.tbl th{color:var(--muted);font-weight:500;font-size:12px;background:var(--paper);position:sticky;top:0}
+.tbl .l{text-align:left}
+.tbl tr[data-edit],.tbl tr[data-plan]{cursor:pointer}
+.tbl tr.wk td{border-top:2px solid var(--rule)}
+.tbl tr.cur td{background:var(--red-soft)}
 .swatches{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .sw{padding:10px 8px;text-align:center;font-size:13px}
 .sw .dots{display:flex;justify-content:center;gap:4px;margin-bottom:6px}
@@ -62,7 +88,7 @@ header.top h1{font-size:19px;margin:0;font-weight:700;letter-spacing:-.01em}
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
 .stat{padding:12px;border:1px solid var(--rule);border-radius:10px;background:var(--paper)}
 .stat .k{font-size:12px;color:var(--muted)}
-.stat .v{font-size:18px;font-weight:600;margin-top:2px}
+.stat .v{font-size:18px;font-weight:600;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .up{color:var(--red)} .down{color:var(--blue)}
 h2{font-size:15px;margin:0 0 10px;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:8px}
 h2 small{font-weight:400;font-size:12px;color:var(--muted)}
@@ -76,7 +102,7 @@ h2 small{font-weight:400;font-size:12px;color:var(--muted)}
 .weekhead{font-size:12px;color:var(--muted);padding:14px 2px 4px;display:flex;justify-content:space-between}
 .empty{text-align:center;color:var(--muted);padding:26px 8px;font-size:14px}
 button{font:inherit;cursor:pointer;border-radius:10px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);padding:10px 14px}
-button.primary{background:var(--ink);color:var(--paper);border-color:var(--ink);font-weight:600}
+button.primary{background:var(--btn,var(--ink));color:var(--btn-fg,var(--paper));border-color:var(--btn,var(--ink));font-weight:600}
 button.ghost{background:transparent}
 button.danger{color:var(--red);border-color:var(--red-soft)}
 button.small{padding:6px 10px;font-size:13px}
@@ -87,9 +113,9 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--paper);border-top:1px solid var(--rule);padding-bottom:env(safe-area-inset-bottom,0px);z-index:10}
 nav.tabs .in{max-width:620px;margin:0 auto;display:flex}
 nav.tabs button{flex:1;border:none;border-radius:0;background:transparent;padding:12px 2px 10px;color:var(--muted);font-size:13px}
-nav.tabs button[aria-selected="true"]{color:var(--ink);font-weight:700;box-shadow:inset 0 3px 0 var(--red)}
+nav.tabs button[aria-selected="true"]{color:var(--ink);font-weight:700;box-shadow:inset 0 3px 0 var(--accent,var(--red))}
 .fab{position:fixed;right:max(16px,calc(50% - 294px));bottom:calc(72px + env(safe-area-inset-bottom,0px));z-index:11;
-  border-radius:999px;padding:14px 20px;background:var(--red);color:#fff;border:none;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+  border-radius:999px;padding:14px 20px;background:var(--accent,var(--red));color:var(--accent-fg,#fff);border:none;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.18)}
 .fab[hidden]{display:none}
 label.f{display:block;font-size:13px;color:var(--muted);margin:10px 0 4px}
 input,select,textarea{font:inherit;width:100%;padding:10px 12px;border:1px solid var(--rule);border-radius:10px;background:var(--bg);color:var(--ink)}
@@ -109,7 +135,7 @@ input,select,textarea{font:inherit;width:100%;padding:10px 12px;border:1px solid
 .preview{margin-top:12px;padding:10px 12px;border-radius:10px;background:var(--red-soft);font-size:14px}
 .seg{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden}
 .seg button{flex:1;border:none;border-radius:0;padding:8px 4px;font-size:14px}
-.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.seg button[aria-pressed="true"]{background:var(--btn,var(--ink));color:var(--btn-fg,var(--paper))}
 .chart svg{display:block;width:100%;height:auto}
 .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:8px}
 .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
@@ -135,6 +161,7 @@ details.help ol{padding-left:18px;margin:8px 0}
   <button role="tab" data-tab="log" aria-selected="false">기록</button>
   <button role="tab" data-tab="hold" aria-selected="false">보유</button>
   <button role="tab" data-tab="chart" aria-selected="false">그래프</button>
+  <button role="tab" data-tab="plan" aria-selected="false">계획</button>
   <button role="tab" data-tab="set" aria-selected="false">설정</button>
 </div></nav>
 <div class="sheet-bg" id="sheetBg"><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
@@ -146,11 +173,11 @@ details.help ol{padding-left:18px;margin:8px 0}
 const LS_KEY = "weekly-div-journal-v1";
 const DEFAULT = {
   v:2,
-  settings:{ fx:1380, fxDate:"", taxUS:15, taxKR:15.4, autoFx:true, goalMonthly:0, tdKey:"", gClientId:"", gLinked:false, updated:0 },
-  holdings:[], entries:[], deleted:[], fxCache:{}, priceCache:{}, quotes:{}
+  settings:{ fx:1380, fxDate:"", taxUS:15, taxKR:15.4, autoFx:true, goalMonthly:0, baseYield:0.85, goalBasis:"gross", planSeeded:false, tdKey:"", gClientId:"", gLinked:false, updated:0 },
+  holdings:[], entries:[], plan:[], deleted:[], fxCache:{}, priceCache:{}, quotes:{}
 };
 let S = clone(DEFAULT);
-let tab = "home", chartMode = "month";
+let tab = "home", chartMode = "month", logMode = "list", tickerSel = "all";
 let renderTimer = null;
 
 // ---------- utils ----------
@@ -180,7 +207,7 @@ function calc(e){
   const gross = e.perShare * e.shares, tax = gross*(e.taxRate/100), net = gross - tax;
   const fx = e.currency==="KRW" ? 1 : e.fx;
   const y = e.price>0 ? e.perShare/e.price*100 : null;
-  return { gross, tax, net, netKRW: net*fx, yield:y, yieldAnnual: y!=null ? y*freqN(e.ticker) : null };
+  return { gross, tax, net, netKRW: net*fx, grossKRW: gross*fx, yield:y, yieldAnnual: y!=null ? y*freqN(e.ticker) : null };
 }
 function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove("show"),2200); }
 async function fetchJSON(url, opts={}, ms=8000){
@@ -191,7 +218,7 @@ async function fetchJSON(url, opts={}, ms=8000){
 function softRender(){ clearTimeout(renderTimer); renderTimer=setTimeout(()=>{ if(!$("#sheetBg").classList.contains("open")) render(); },250); }
 
 // ---------- theme ----------
-const THEMES={ teal:{name:"청록 통장",dots:["#E6EEEB","#173A40","#D2343A"],meta:"#173A40"}, navy:{name:"밤하늘",dots:["#E9ECF3","#1C2A4A","#3B5BDB"],meta:"#1C2A4A"}, plum:{name:"라벤더",dots:["#EFEAF3","#3B2550","#6A4FC2"],meta:"#3B2550"} };
+const THEMES={ teal:{name:"청록 통장",dots:["#E6EEEB","#173A40","#D2343A"],meta:"#173A40"}, toss:{name:"토스 스타일",dots:["#F2F4F6","#191F28","#3182F6"],meta:"#F2F4F6"}, kakao:{name:"카카오페이 스타일",dots:["#FFFFFF","#191919","#FEE500"],meta:"#FEE500"} };
 function getTheme(){ try{ return localStorage.getItem("jb-theme")||"teal"; }catch(e){ return "teal"; } }
 function applyTheme(t){
   if(!THEMES[t]) t="teal";
@@ -205,7 +232,7 @@ applyTheme(getTheme());
 function normalize(p){
   const o = Object.assign(clone(DEFAULT), p||{});
   o.settings = Object.assign(clone(DEFAULT.settings), (p&&p.settings)||{});
-  for(const k of ["holdings","entries","deleted"]) if(!Array.isArray(o[k])) o[k]=[];
+  for(const k of ["holdings","entries","plan","deleted"]) if(!Array.isArray(o[k])) o[k]=[];
   for(const k of ["fxCache","priceCache","quotes"]) if(!o[k]||typeof o[k]!=="object") o[k]={};
   o.entries.forEach(e=>{ if(e.fxAuto===undefined) e.fxAuto=false; });
   return o;
@@ -312,7 +339,7 @@ function mergeIn(raw){
   const p=normalize(raw);
   const dead=new Set([...S.deleted,...p.deleted]);
   const e=mergeList(S.entries,p.entries,dead), h=mergeList(S.holdings,p.holdings,dead);
-  S.entries=e.list; S.holdings=h.list; S.deleted=[...dead];
+  const pl=mergeList(S.plan,p.plan,dead); S.entries=e.list; S.holdings=h.list; S.plan=pl.list; S.deleted=[...dead];
   if((p.settings.updated||0) > (S.settings.updated||0)){ const keep={gLinked:S.settings.gLinked}; S.settings=Object.assign(p.settings,keep); }
   S.fxCache=Object.assign({},p.fxCache,S.fxCache);
   for(const t in p.priceCache) S.priceCache[t]=Object.assign({},p.priceCache[t],S.priceCache[t]||{});
@@ -347,7 +374,11 @@ const Drive = {
   },
   async api(url, opts={}){
     const o=Object.assign({},opts); o.headers=Object.assign({Authorization:"Bearer "+this.token},opts.headers||{});
-    const r=await fetch(url,o); if(r.status===401){ this.token=null; throw new Error("expired"); } if(!r.ok) throw new Error("HTTP "+r.status);
+    const r=await fetch(url,o); if(r.status===401){ this.token=null; throw new Error("expired"); }
+    if(!r.ok){ let t=""; try{ t=await r.text(); }catch(e){}
+      if(r.status===403 && /has not been used|is disabled|accessNotConfigured|SERVICE_DISABLED/i.test(t)) throw new Error("driveoff");
+      if(r.status===403 && /insufficient|scope/i.test(t)) throw new Error("scope");
+      throw new Error("HTTP "+r.status); }
     const ct=r.headers.get("content-type")||""; return ct.includes("json")? r.json() : r.text();
   },
   async findFile(){
@@ -385,7 +416,8 @@ const Drive = {
       this.status="err";
       if(interactive){
         const m=e.message;
-        toast(m==="noclient"?"설정에서 구글 클라이언트 ID를 먼저 넣어 주세요": m==="gis"?"구글 로그인을 불러오지 못했어요 (인터넷 확인)": m==="popup_closed"||m==="access_denied"?"구글 로그인이 취소됐어요":"동기화에 실패했어요");
+        toast(m==="noclient"?"설정에서 구글 클라이언트 ID를 먼저 넣어 주세요": m==="gis"?"구글 로그인을 불러오지 못했어요 (인터넷 확인)": m==="popup_closed"||m==="access_denied"?"구글 로그인이 취소됐어요":
+          m==="driveoff"?"구글 클라우드에서 Google Drive API를 ‘사용’으로 켜 주세요": m==="scope"?"로그인할 때 드라이브 접근 허용에 체크해 주세요": m==="expired"?"다시 한 번 눌러 로그인해 주세요": m==="popup_failed_to_open"?"팝업이 막혔어요. 브라우저에서 팝업을 허용해 주세요": `동기화 실패 (${m})`);
       }
     }finally{ this.busy=false; this.setChip(); }
   },
@@ -413,26 +445,35 @@ function divByTicker(){ const o={}; for(const e of S.entries){ o[e.ticker]=(o[e.
 
 // ---------- charts (SVG) ----------
 const kfmt = n => { const a=Math.abs(n); return a>=1e8?(n/1e8).toFixed(1)+"억": a>=1e4?Math.round(n/1e4)+"만": Math.round(n).toLocaleString(); };
-function barChart({labels, values, target=0, H=190, labelEvery=1}){
+function barChart({labels, values, target=0, H=190, labelEvery=1, fmt=kfmt}){
   const W=400, pl=38, pr=6, pt=10, pb=22, n=values.length;
-  const max=Math.max(1, target*1.15, ...values)*1.05, bw=(W-pl-pr)/n, y=v=>pt+(H-pt-pb)*(1-v/max);
-  let g=""; for(let i=0;i<=3;i++){ const v=max*i/3; g+=`<line x1="${pl}" x2="${W-pr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--rule)" stroke-width="1"/><text x="${pl-6}" y="${y(v)+4}" font-size="11.5" text-anchor="end" fill="var(--muted)">${kfmt(v)}</text>`; }
+  const tg = Array.isArray(target) ? target : values.map(()=>target);
+  const constant = !Array.isArray(target);
+  const max=Math.max(1, ...tg.map(t=>t*1.1), ...values)*1.05, bw=(W-pl-pr)/n, y=v=>pt+(H-pt-pb)*(1-v/max);
+  let g=""; for(let i=0;i<=3;i++){ const v=max*i/3; g+=`<line x1="${pl}" x2="${W-pr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--rule)" stroke-width="1"/><text x="${pl-6}" y="${y(v)+4}" font-size="11.5" text-anchor="end" fill="var(--muted)">${fmt(v)}</text>`; }
   const bars=values.map((v,i)=>{ const x=pl+i*bw+bw*.18, w=bw*.64, h=(H-pt-pb)-(y(v)-pt);
-    const hit = target>0 && v>=target;
-    return `<rect x="${x}" y="${y(v)}" width="${w}" height="${Math.max(0,h)}" rx="3" fill="var(--red)" opacity="${target>0&&!hit?.55:.9}"><title>${esc(labels[i])}: ${won(v)}</title></rect>`
-      + ((i%labelEvery===0||i===n-1)?`<text x="${x+w/2}" y="${H-7}" font-size="11.5" text-anchor="middle" fill="var(--muted)">${esc(labels[i])}</text>`:""); }).join("");
-  const tl = target>0 ? `<line x1="${pl}" x2="${W-pr}" y1="${y(target)}" y2="${y(target)}" stroke="var(--blue)" stroke-width="2.5" stroke-dasharray="7 5"/>` : "";
+    const t=tg[i]||0, miss = t>0 && v<t;
+    let s=`<rect x="${x}" y="${y(v)}" width="${w}" height="${Math.max(0,h)}" rx="3" fill="var(--red)" opacity="${miss?.5:.9}"><title>${esc(labels[i])}: ${won(v)}${t?` / 목표 ${won(t)}`:""}</title></rect>`;
+    if(!constant && t>0) s+=`<line x1="${x-bw*.1}" x2="${x+w+bw*.1}" y1="${y(t)}" y2="${y(t)}" stroke="var(--blue)" stroke-width="2.5" stroke-linecap="round"/>`;
+    if(i%labelEvery===0||i===n-1) s+=`<text x="${x+w/2}" y="${H-7}" font-size="11.5" text-anchor="middle" fill="var(--muted)">${esc(labels[i])}</text>`;
+    return s; }).join("");
+  const tl = constant && target>0 ? `<line x1="${pl}" x2="${W-pr}" y1="${y(target)}" y2="${y(target)}" stroke="var(--blue)" stroke-width="2.5" stroke-dasharray="7 5"/>` : "";
   return `<div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img">${g}${bars}${tl}</svg></div>`;
 }
-function lineChart({labels, series, H=210, labelEvery=1}){
-  const W=400, pl=40, pr=8, pt=10, pb=22, n=labels.length;
-  const max=Math.max(1,...series.flatMap(s=>s.values))*1.08, x=i=>pl+(W-pl-pr)*(n<=1?0:i/(n-1)), y=v=>pt+(H-pt-pb)*(1-v/max);
-  let g=""; for(let i=0;i<=3;i++){ const v=max*i/3; g+=`<line x1="${pl}" x2="${W-pr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--rule)"/><text x="${pl-6}" y="${y(v)+4}" font-size="11.5" text-anchor="end" fill="var(--muted)">${kfmt(v)}</text>`; }
-  const lab=labels.map((l,i)=>(i%labelEvery===0||i===n-1)?`<text x="${x(i)}" y="${H-7}" font-size="11.5" text-anchor="${i===n-1?"end":i===0?"start":"middle"}" fill="var(--muted)">${esc(l)}</text>`:"").join("");
+function lineChart({labels, series, H=210, labelEvery=1, fmt=kfmt, fromZero=true}){
+  const W=400, pr=8, pt=10, pb=22, n=labels.length;
+  const all=series.flatMap(s=>s.values).filter(v=>v!=null);
+  let hi=Math.max(...all,0), lo=fromZero?0:Math.min(...all);
+  if(!fromZero){ const pad=(hi-lo)*.25||hi*.1||1; lo=Math.max(0,lo-pad); hi=hi+pad; } else hi=Math.max(1,hi)*1.08;
+  const tickW=Math.max(...[0,1,2,3].map(i=>String(fmt(lo+(hi-lo)*i/3)).length)); const pl=Math.max(36,tickW*7+10);
+  const x=i=>pl+(W-pl-pr)*(n<=1?.5:i/(n-1)), y=v=>pt+(H-pt-pb)*(1-(v-lo)/(hi-lo||1));
+  let g=""; for(let i=0;i<=3;i++){ const v=lo+(hi-lo)*i/3; g+=`<line x1="${pl}" x2="${W-pr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--rule)"/><text x="${pl-6}" y="${y(v)+4}" font-size="11.5" text-anchor="end" fill="var(--muted)">${fmt(v)}</text>`; }
+  const lab=labels.map((l,i)=>(i%labelEvery===0||i===n-1)?`<text x="${x(i)}" y="${H-7}" font-size="11.5" text-anchor="${n>1&&i===n-1?"end":n>1&&i===0?"start":"middle"}" fill="var(--muted)">${esc(l)}</text>`:"").join("");
   const lines=series.map(s=>{ const pts=s.values.map((v,i)=>v==null?null:`${x(i)},${y(v)}`).filter(Boolean).join(" ");
+    const dots = s.dots ? s.values.map((v,i)=>v==null?"":`<circle cx="${x(i)}" cy="${y(v)}" r="3.5" fill="${s.color}"><title>${esc(labels[i])}: ${fmt(v)}</title></circle>`).join("") : "";
     const lastI=s.values.map((v,i)=>v==null?-1:i).filter(i=>i>=0).pop();
-    return `<polyline points="${pts}" fill="none" stroke="${s.color}" stroke-width="2.5" ${s.dash?'stroke-dasharray="6 4"':""} stroke-linejoin="round" stroke-linecap="round"/>`
-      + (lastI!=null&&lastI>=0?`<circle cx="${x(lastI)}" cy="${y(s.values[lastI])}" r="4" fill="${s.color}"/>`:""); }).join("");
+    return `<polyline points="${pts}" fill="none" stroke="${s.color}" stroke-width="2.5" ${s.dash?'stroke-dasharray="6 4"':""} stroke-linejoin="round" stroke-linecap="round"/>`+dots
+      + (!s.dots&&lastI!=null&&lastI>=0?`<circle cx="${x(lastI)}" cy="${y(s.values[lastI])}" r="4" fill="${s.color}"/>`:""); }).join("");
   return `<div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img">${g}${lab}${lines}</svg></div>`;
 }
 const PALETTE=["var(--red)","var(--blue)","#E0A21B","#3E9C6B","#8B5CC7","#E26A2C","#2BA3B5","#9A6B4F"];
@@ -446,11 +487,43 @@ function donut(items){
   return `<div style="display:flex;justify-content:center"><svg viewBox="0 0 180 180" width="180" height="180" role="img">${paths}<text x="90" y="86" text-anchor="middle" font-size="11" fill="var(--muted)">합계</text><text x="90" y="104" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">${kfmt(tot)}</text></svg></div>${leg}`;
 }
 
+// ---------- goals / plan helpers ----------
+const basis=()=>S.settings.goalBasis||"gross";
+const basisName=()=>basis()==="gross"?"세전":"세후";
+const amtOf=(e,b)=>{ const c=calc(e); return b==="gross"?c.grossKRW:c.netKRW; };
+const ymOf=(y,m)=>y+"-"+String(m+1).padStart(2,"0");
+const ymLabel=ym=>{ const [y,m]=ym.split("-"); return `${y.slice(2)}.${+m}`; };
+const man=n=>(Math.round(n/1000)/10).toLocaleString("ko-KR",{maximumFractionDigits:1});
+function planOf(ym){ return S.plan.find(p=>p.ym===ym); }
+function goalFor(y,m){ const p=planOf(ymOf(y,m)); if(p&&p.expected>0) return p.expected*10000; return +S.settings.goalMonthly||0; }
+function actualYm(ym,b){ let s=0; for(const e of S.entries) if(e.date.startsWith(ym)) s+=amtOf(e,b); return s; }
+function weekLabel(k, withYear){ const th=parseD(addDays(k,3)), n=Math.ceil(th.getDate()/7);
+  return `${withYear&&th.getFullYear()!==new Date().getFullYear()?th.getFullYear()+"년 ":""}${th.getMonth()+1}월 ${n}주차`; }
+function weekGoal(k){ const th=parseD(addDays(k,3)); return goalFor(th.getFullYear(),th.getMonth())*12/52; }
+const fmtPs=n=>String(+(+n).toFixed(4));
+function changeMap(){
+  const by={}, m={}; for(const e of S.entries) (by[e.ticker]=by[e.ticker]||[]).push(e);
+  for(const t in by){ const a=by[t].sort((x,y)=>x.date.localeCompare(y.date)||(x.created||0)-(y.created||0));
+    a.forEach((e,i)=>{ const p=a[i-1]; m[e.id]= p ? {d:e.perShare-p.perShare, p:p.perShare?(e.perShare-p.perShare)/p.perShare*100:0} : null; }); }
+  return m;
+}
+function chgHTML(c,cur){
+  if(!c) return `<span class="chg">첫 기록</span>`;
+  if(Math.abs(c.d)<1e-9) return `<span class="chg">– 변동 없음</span>`;
+  const up=c.d>0; return `<span class="chg ${up?"up":"down"}">${up?"▲":"▼"} ${cur==="KRW"?won(Math.abs(c.d)):"$"+fmtPs(Math.abs(c.d))} (${pct(c.p,1)})</span>`;
+}
+function portfolio(){
+  const fx=S.settings.fx, dv=divByTicker(); let tCost=0,tVal=0,tDiv=0,tDivP=0,missing=0; const rows=[];
+  for(const h of S.holdings){ const k=h.currency==="KRW"?1:fx, p=curPrice(h), cost=(h.avgCost||0)*h.shares*k, val=p?p*h.shares*k:null, d=dv[h.ticker]||0;
+    if(val==null) missing++; else { tVal+=val; tCost+=cost; tDivP+=d; } tDiv+=d; rows.push({h,p,cost,val,d}); }
+  return {tCost,tVal,tDiv,tDivP,missing,rows};
+}
+
 // ---------- views ----------
 function goalBlock(){
-  const g=+S.settings.goalMonthly||0; if(!g) return "";
-  const now=new Date(), m=byMonth(now.getFullYear())[now.getMonth()], p=Math.min(100,m/g*100);
-  return `<div style="margin-top:14px"><div style="display:flex;justify-content:space-between;font-size:13px"><span class="muted">이번 달 목표 ${won(g)}</span><span class="num" style="font-weight:600">${Math.round(m/g*100)}%</span></div><div class="bar"><span style="width:${p}%"></span></div></div>`;
+  const now=new Date(), y=now.getFullYear(), mi=now.getMonth(), g=goalFor(y,mi); if(!g) return "";
+  const m=actualYm(ymOf(y,mi),basis()), p=Math.min(100,m/g*100);
+  return `<div style="margin-top:14px"><div style="display:flex;justify-content:space-between;font-size:13px"><span class="muted">${mi+1}월 목표 ${won(g)} (${basisName()} 기준)</span><span class="num" style="font-weight:600">${Math.round(m/g*100)}%</span></div><div class="bar"><span style="width:${p}%"></span></div></div>`;
 }
 function viewHome(){
   const now=new Date(), y=now.getFullYear(), wk=byWeek();
@@ -460,10 +533,10 @@ function viewHome(){
   const start=monday(new Date(y,0,1)); const cells=[]; let max=0;
   for(let i=0;i<52;i++){ const m=new Date(start); m.setDate(m.getDate()+7*i); const v=wk.get(isoOf(m))||0; cells.push({m,v}); if(v>max)max=v; }
   const strip=cells.map(c=>{ const a=max?Math.max(.18,c.v/max):0; const now1=monday(now).getTime()===c.m.getTime();
-    return `<div class="c${now1?" now":""}" style="${c.v>0?`background:color-mix(in srgb, var(--red) ${Math.round(a*100)}%, var(--cell0))`:""}" title="${fmtD(c.m)} 주 · ${won(c.v)}"></div>`; }).join("");
-  const thisMon=monday(now), labels=[], vals=[];
-  for(let i=11;i>=0;i--){ const m=new Date(thisMon); m.setDate(m.getDate()-7*i); labels.push(fmtD(m)); vals.push(wk.get(isoOf(m))||0); }
-  const g=+S.settings.goalMonthly||0;
+    return `<div class="c${now1?" now":""}" style="${c.v>0?`background:color-mix(in srgb, var(--red) ${Math.round(a*100)}%, var(--cell0))`:""}" title="${weekLabel(isoOf(c.m))} · ${won(c.v)}"></div>`; }).join("");
+  const thisMon=monday(now), labels=[], vals=[], tg=[];
+  for(let i=7;i>=0;i--){ const m=new Date(thisMon); m.setDate(m.getDate()-7*i); const k=isoOf(m); labels.push(weekLabel(k).replace("주차","주")); vals.push(wk.get(k)||0); tg.push(weekGoal(k)); }
+  const hasGoal=tg.some(t=>t>0);
   return `
   <section class="card hero">
     <div class="label">${y}년 받은 배당 (세후)</div>
@@ -474,55 +547,62 @@ function viewHome(){
     ${goalBlock()}
   </section>
   <section class="stats">
-    <div class="stat"><div class="k">이번 달</div><div class="v num">${won(month)}</div></div>
+    <div class="stat"><div class="k">이번 달 (세후)</div><div class="v num">${won(month)}</div></div>
     <div class="stat"><div class="k">최근 4주 평균 / 주</div><div class="v num">${won(avg)}</div></div>
     <div class="stat"><div class="k">연 환산 예상</div><div class="v num">${won(avg*52)}</div></div>
     <div class="stat"><div class="k">오늘 환율</div><div class="v num">${S.settings.fx.toLocaleString()}원</div></div>
   </section>
-  <section class="card"><h2>최근 12주 <small>${g?"점선: 주간 목표":""}</small></h2>${barChart({labels,values:vals,target:g?g*12/52:0,labelEvery:2})}</section>`;
+  <section class="card"><h2>최근 8주 (세후) <small>${hasGoal?"파란 선: 주간 목표":""}</small></h2>${barChart({labels,values:vals,target:hasGoal?tg:0,labelEvery:2})}</section>`;
 }
 
 function viewLog(){
   const list=sorted();
   if(!list.length) return `<div class="card empty">기록이 없어요.<br>‘+ 이번 주 배당’을 눌러 보유 종목의 배당을 한 번에 기록해 보세요.</div>`;
+  const chg=changeMap();
+  const seg=`<div class="seg" id="lseg" style="margin-bottom:6px"><button data-m="list" aria-pressed="${logMode==="list"}">목록</button><button data-m="table" aria-pressed="${logMode==="table"}">표</button></div>`;
+  const add=`<div class="btnrow" style="margin-top:14px"><button id="addOne" class="ghost">개별 기록 추가</button><button id="csvLog" class="ghost">CSV 내보내기</button></div>`;
+  if(logMode==="table"){
+    let prevK="";
+    const rows=list.map(e=>{ const c=calc(e), u=e.currency!=="KRW", k=weekKey(e.date), first=k!==prevK; prevK=k;
+      return `<tr data-edit="${e.id}"${first?' class="wk"':""}><td class="l">${first?weekLabel(k,true):""}</td><td class="l">${fmtD(parseD(e.date))}</td><td class="l"><b>${esc(e.ticker)}</b></td><td>${u?"$"+fmtPs(e.perShare):won(e.perShare)}</td><td>${chgHTML(chg[e.id],e.currency)}</td><td>${e.shares.toLocaleString()}</td><td class="amt">${won(c.netKRW)}</td><td>${c.yield!=null?c.yield.toFixed(2)+"%":"-"}</td></tr>`; }).join("");
+    return seg+`<div class="card" style="padding:0;margin-top:8px"><div class="tbl"><table><thead><tr><th class="l">주차</th><th class="l">입금일</th><th class="l">종목</th><th>주당</th><th>지난번 대비</th><th>수량</th><th>세후(원)</th><th>주가 대비</th></tr></thead><tbody>${rows}</tbody></table></div></div>
+      <p class="muted" style="font-size:12px;margin:6px 2px 0">표를 옆으로 밀면 더 볼 수 있어요. 행을 누르면 수정돼요.</p>`+add;
+  }
   const groups=new Map(); for(const e of list){ const k=weekKey(e.date); if(!groups.has(k)) groups.set(k,[]); groups.get(k).push(e); }
-  let html="";
+  let html=seg;
   for(const [k,arr] of groups){
     const sum=arr.reduce((a,e)=>a+calc(e).netKRW,0), m=parseD(k), end=new Date(m); end.setDate(end.getDate()+6);
-    html+=`<div class="weekhead"><span>${m.getFullYear()}년 ${fmtD(m)} – ${fmtD(end)}</span><span class="num">${won(sum)}</span></div><div class="card" style="padding:4px 16px">`;
-    html+=arr.map(e=>{ const c=calc(e), usdE=e.currency!=="KRW";
-      const y = c.yield!=null ? `<span class="yield num">주가 ${usdE?usd(e.price):won(e.price)} 대비 ${c.yield.toFixed(2)}% · 연환산 ${c.yieldAnnual.toFixed(1)}%</span>` : (usdE&&S.settings.tdKey&&!e.priceFail?`<span class="yield">주가 불러오는 중</span>`:"");
-      return `<div class="row" data-edit="${e.id}" style="cursor:pointer"><div class="l"><div class="t">${esc(e.ticker)}<span class="tag">${fmtD(parseD(e.date))}</span></div>
-      <div class="s num">${usdE?"$"+e.perShare:won(e.perShare)} × ${e.shares}주 · 세금 ${e.taxRate}%${usdE?` · 환율 ${e.fx}${e.fxPending?" (자동 반영 대기)":""}`:""}${e.memo?" · "+esc(e.memo):""}</div>${y}</div>
-      <div class="r"><div class="num amt">${won(c.netKRW)}</div><div class="s num">${usdE?usd(c.net):""}</div></div></div>`; }).join("");
+    html+=`<div class="weekhead"><span><b style="color:var(--ink)">${weekLabel(k,true)}</b> · ${fmtD(m)}–${fmtD(end)}</span><span class="num">${won(sum)}</span></div><div class="card" style="padding:4px 16px">`;
+    html+=arr.map(e=>{ const c=calc(e), u=e.currency!=="KRW";
+      const y = c.yield!=null ? `<span class="yield num">주가 ${u?usd(e.price):won(e.price)} 대비 ${c.yield.toFixed(2)}%</span>` : (u&&S.settings.tdKey&&!e.priceFail?`<span class="yield">주가 불러오는 중</span>`:"");
+      return `<div class="row" data-edit="${e.id}" style="cursor:pointer"><div class="l"><div class="t">${esc(e.ticker)}<span class="tag">${fmtD(parseD(e.date))}</span> ${chgHTML(chg[e.id],e.currency)}</div>
+      <div class="s num">${u?"$"+fmtPs(e.perShare):won(e.perShare)} × ${e.shares}주 · 세금 ${e.taxRate}%${u?` · 환율 ${e.fx}${e.fxPending?" (자동 반영 대기)":""}`:""}${e.memo?" · "+esc(e.memo):""}</div>${y}</div>
+      <div class="r"><div class="num amt">${won(c.netKRW)}</div><div class="s num">${u?usd(c.net):""}</div></div></div>`; }).join("");
     html+=`</div>`;
   }
-  return html+`<div class="btnrow" style="margin-top:14px"><button id="addOne" class="ghost">개별 기록 추가</button></div>`;
+  return html+add;
 }
 
 function viewHold(){
   if(!S.holdings.length) return `<section class="card"><div class="empty">보유 종목을 등록하면 현재 주가로 평가손익과 배당 포함 수익을 볼 수 있어요.</div></section><div class="btnrow"><button class="primary" id="addHold">종목 추가</button></div>`;
-  const fx=S.settings.fx, dv=divByTicker();
-  let tCost=0, tVal=0, tDiv=0, tDivP=0, missing=0;
-  const rows=S.holdings.map(h=>{
-    const k = h.currency==="KRW"?1:fx, p=curPrice(h), cost=(h.avgCost||0)*h.shares*k, val=p?p*h.shares*k:null, d=dv[h.ticker]||0;
-    if(val==null) missing++; else { tVal+=val; tCost+=cost; tDivP+=d; }
-    tDiv+=d;
+  const P=portfolio(), fx=S.settings.fx;
+  const rows=P.rows.map(({h,p,cost,val,d})=>{
     const pl = val!=null&&cost? val-cost : null, plp = pl!=null? pl/cost*100 : null, tot = pl!=null? (pl+d)/cost*100 : null;
     const pTxt = p? (h.currency==="KRW"?won(p):usd(p)) : "가격 없음";
     return `<div class="row" data-hold="${h.id}" style="cursor:pointer;align-items:flex-start"><div class="l"><div class="t">${esc(h.ticker)}<span class="tag">${esc(h.freq||"주배당")}</span></div>
       <div class="s num">${h.shares.toLocaleString()}주 · 평단 ${h.avgCost?(h.currency==="KRW"?won(h.avgCost):usd(h.avgCost)):"미입력"} · 현재 ${pTxt}</div>
-      <div class="s num">받은 배당 ${won(d)}${tot!=null?` · 배당 포함 <b class="${cls(tot)}">${pct(tot,1)}</b>`:""}</div></div>
+      <div class="s num">받은 배당 ${won(d)}${val?` <b class="up">(평가금액 대비 ${(d/val*100).toFixed(2)}%)</b>`:""}</div>
+      ${tot!=null?`<div class="s num">배당 포함 총수익 <b class="${cls(tot)}">${pct(tot,1)}</b></div>`:""}</div>
       <div class="r"><div class="num" style="font-weight:600">${val!=null?won(val):"-"}</div><div class="s num ${cls(pl||0)}">${pl!=null?`${wonS(pl)} (${pct(plp,1)})`:""}</div></div></div>`;
   }).join("");
-  const pl=tVal-tCost, q=Object.values(S.quotes).map(x=>x.at).sort().pop();
+  const {tCost,tVal,tDiv,tDivP,missing}=P, pl=tVal-tCost, q=Object.values(S.quotes).map(x=>x.at).sort().pop();
   return `
   <section class="card">
     <h2>내 주식 수익 <small>${q?`주가 ${new Date(q).toLocaleString("ko-KR",{month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"})}`:""}</small></h2>
     <div class="stats" style="margin:0">
       <div class="stat"><div class="k">평가금액</div><div class="v num">${won(tVal)}</div></div>
       <div class="stat"><div class="k">평가손익</div><div class="v num ${cls(pl)}">${tCost?`${wonS(pl)}`:"-"}</div><div class="s num ${cls(pl)}" style="font-size:12px">${tCost?pct(pl/tCost*100):""}</div></div>
-      <div class="stat"><div class="k">받은 배당 (세후)</div><div class="v num up">${won(tDiv)}</div></div>
+      <div class="stat"><div class="k">받은 배당 (세후)</div><div class="v num up">${won(tDiv)}</div><div class="s num up" style="font-size:12px">${tVal?`평가금액 대비 ${(tDivP/tVal*100).toFixed(2)}%`:""}</div></div>
       <div class="stat"><div class="k">배당 포함 총수익</div><div class="v num ${cls(pl+tDivP)}">${tCost?wonS(pl+tDivP):"-"}</div><div class="s num ${cls(pl+tDivP)}" style="font-size:12px">${tCost?pct((pl+tDivP)/tCost*100):""}</div></div>
     </div>
     <p class="muted" style="margin:10px 0 0">달러 종목은 오늘 환율(${fx.toLocaleString()}원)로 계산해요.${missing?` 가격이 없는 종목 ${missing}개는 합계에서 빠졌어요.`:""}${!S.settings.tdKey?" 설정에서 주가 API 키를 넣으면 현재가가 자동으로 들어와요.":""}</p>
@@ -531,41 +611,100 @@ function viewHold(){
   <div class="btnrow"><button id="refQ" ${S.settings.tdKey?"":"disabled"}>주가 새로고침</button><button class="primary" id="addHold">종목 추가</button></div>`;
 }
 
+function tickerDetail(t){
+  const es=S.entries.filter(e=>e.ticker===t).sort((a,b)=>a.date.localeCompare(b.date)||(a.created||0)-(b.created||0));
+  if(!es.length) return `<section class="card"><div class="empty">${esc(t)} 기록이 아직 없어요.</div></section>`;
+  const chg=changeMap(), cur=es[0].currency, u=cur!=="KRW", last=es[es.length-1], lc=chg[last.id];
+  const rec=es.slice(-4), avg=rec.reduce((a,e)=>a+e.perShare,0)/rec.length, tot=es.reduce((a,e)=>a+calc(e).netKRW,0);
+  const ups=es.filter(e=>chg[e.id]&&chg[e.id].d>1e-9).length, downs=es.filter(e=>chg[e.id]&&chg[e.id].d<-1e-9).length;
+  const show=es.slice(-26), labels=show.map(e=>fmtD(parseD(e.date)));
+  const psFmt=v=>u?"$"+(+v).toFixed(3):Math.round(v).toLocaleString();
+  const yl=show.map(e=>calc(e).yield);
+  const rows=[...es].reverse().map(e=>{ const c=calc(e); return `<tr data-edit="${e.id}"><td class="l">${weekLabel(weekKey(e.date),true)}</td><td class="l">${fmtD(parseD(e.date))}</td><td>${u?"$"+fmtPs(e.perShare):won(e.perShare)}</td><td>${chgHTML(chg[e.id],cur)}</td><td>${e.shares.toLocaleString()}</td><td class="amt">${won(c.netKRW)}</td><td>${c.yield!=null?c.yield.toFixed(2)+"%":"-"}</td></tr>`; }).join("");
+  return `
+  <section class="stats">
+    <div class="stat"><div class="k">최근 주당 배당</div><div class="v num">${u?"$"+fmtPs(last.perShare):won(last.perShare)}</div><div style="font-size:12px">${chgHTML(lc,cur)}</div></div>
+    <div class="stat"><div class="k">최근 4회 평균</div><div class="v num">${u?"$"+fmtPs(avg.toFixed(4)):won(avg)}</div></div>
+    <div class="stat"><div class="k">받은 배당 누적 (세후)</div><div class="v num up">${won(tot)}</div><div class="s" style="font-size:12px">${es.length}회</div></div>
+    <div class="stat"><div class="k">오른 횟수 / 내린 횟수</div><div class="v num"><span class="up">▲${ups}</span> <span class="down">▼${downs}</span></div></div>
+  </section>
+  <section class="card"><h2>주당 배당 변화 <small>최근 ${show.length}회</small></h2>${lineChart({labels,series:[{values:show.map(e=>e.perShare),color:"var(--red)",dots:true}],fmt:psFmt,fromZero:false,labelEvery:Math.max(1,Math.ceil(show.length/6))})}</section>
+  ${yl.some(v=>v!=null)?`<section class="card"><h2>주가 대비 배당률 변화</h2>${lineChart({labels,series:[{values:yl,color:"var(--blue)",dots:true}],fmt:v=>v.toFixed(2)+"%",fromZero:false,labelEvery:Math.max(1,Math.ceil(show.length/6))})}</section>`:""}
+  <section class="card"><h2>받은 금액 (세후)</h2>${barChart({labels,values:show.map(e=>calc(e).netKRW),labelEvery:Math.max(1,Math.ceil(show.length/6))})}</section>
+  <section class="card" style="padding:0"><div class="tbl"><table><thead><tr><th class="l">주차</th><th class="l">입금일</th><th>주당</th><th>지난번 대비</th><th>수량</th><th>세후(원)</th><th>주가 대비</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
+}
+
 function viewChart(){
-  const now=new Date(), y=now.getFullYear(), g=+S.settings.goalMonthly||0;
+  const now=new Date(), y=now.getFullYear(), b=basis();
   const seg=`<div class="seg" id="cseg" style="margin-bottom:14px">${[["month","월별"],["week","주별"],["cum","누적"],["ticker","종목"]].map(([k,l])=>`<button data-m="${k}" aria-pressed="${chartMode===k}">${l}</button>`).join("")}</div>`;
-  const months=byMonth(y), ytd=months.reduce((a,b)=>a+b,0);
-  const firstThisYear=[...S.entries].map(e=>e.date).filter(d=>d.startsWith(y+"-")).sort()[0];
-  const startD=firstThisYear?new Date(Math.max(new Date(y,0,1),new Date(parseD(firstThisYear).getFullYear(),parseD(firstThisYear).getMonth(),1))):new Date(y,0,1);
-  const startM=startD.getMonth(), days=Math.floor((now-startD)/864e5)+1, goalYtd=g*12*days/365;
-  const goalCard = g ? `<section class="card"><h2>목표 대비</h2>
+  if(chartMode==="ticker"){
+    const ts=[...new Set(S.entries.map(e=>e.ticker))].sort();
+    if(tickerSel!=="all" && !ts.includes(tickerSel)) tickerSel="all";
+    const chips=`<div class="chips" id="tchips">${["all",...ts].map(t=>`<button data-t="${esc(t)}" aria-pressed="${tickerSel===t}">${t==="all"?"전체":esc(t)}</button>`).join("")}</div>`;
+    if(tickerSel==="all"){ const o={}; for(const e of S.entries){ if(parseD(e.date).getFullYear()===y) o[e.ticker]=(o[e.ticker]||0)+calc(e).netKRW; }
+      return seg+chips+`<section class="card"><h2>${y}년 종목별 비중 (세후)</h2>${donut(Object.entries(o).sort((a,b)=>b[1]-a[1]))}<p class="muted" style="margin:10px 0 0">위에서 종목을 고르면 그 종목만 날짜별로 볼 수 있어요.</p></section>`; }
+    return seg+chips+tickerDetail(tickerSel);
+  }
+  const months=new Array(12).fill(0).map((_,i)=>actualYm(ymOf(y,i),b)), goals=months.map((_,i)=>goalFor(y,i)), hasGoal=goals.some(g=>g>0);
+  const firstThisYear=S.entries.map(e=>e.date).filter(d=>d.startsWith(y+"-")).sort()[0];
+  const startM=firstThisYear?parseD(firstThisYear).getMonth():0, cm=now.getMonth();
+  const dim=new Date(y,cm+1,0).getDate();
+  let startG=startM; while(startG<cm && !(goals[startG]>0)) startG++;
+  let goalToDate=0; for(let i=startG;i<cm;i++) goalToDate+=goals[i]; goalToDate+=goals[cm]*now.getDate()/dim;
+  const actToDate=months.slice(startG,cm+1).reduce((a,v)=>a+v,0);
+  const goalCard = hasGoal ? `<section class="card"><h2>목표 대비 <small>${basisName()} 기준</small></h2>
     <div class="stats" style="margin:0">
-      <div class="stat"><div class="k">이번 달</div><div class="v num">${Math.round(months[now.getMonth()]/g*100)}%</div><div class="s" style="font-size:12px">${won(months[now.getMonth()])} / ${won(g)}</div></div>
-      <div class="stat"><div class="k">${startM?`${startM+1}월부터 지금까지`:"올해 지금까지"}</div><div class="v num">${goalYtd?Math.round(ytd/goalYtd*100):0}%</div><div class="s" style="font-size:12px">${won(ytd)} / ${won(goalYtd)}</div></div>
-      <div class="stat"><div class="k">예상 연간 (최근 4주 기준)</div><div class="v num">${won(recentAvgWeek()*52)}</div></div>
-      <div class="stat"><div class="k">목표 연간</div><div class="v num">${won(g*12)}</div></div>
+      <div class="stat"><div class="k">${cm+1}월</div><div class="v num">${goals[cm]?Math.round(months[cm]/goals[cm]*100)+"%":"-"}</div><div class="s" style="font-size:12px">${won(months[cm])} / ${won(goals[cm])}</div></div>
+      <div class="stat"><div class="k">${startG===cm?"이번 달 지금까지":(startG+1)+"월부터 지금까지"}</div><div class="v num">${goalToDate?Math.round(actToDate/goalToDate*100):0}%</div><div class="s" style="font-size:12px">${won(actToDate)} / ${won(goalToDate)}</div></div>
     </div></section>`
-    : `<section class="card"><div class="muted">설정에서 <b>월 목표 배당금</b>을 입력하면 받은 금액과 목표를 그래프로 비교할 수 있어요.</div><div class="btnrow" style="margin-top:10px"><button id="goGoal">목표 설정하기</button></div></section>`;
+    : `<section class="card"><div class="muted">계획 탭에서 <b>월별 목표</b>를 정하면 받은 금액과 목표를 그래프로 비교할 수 있어요.</div><div class="btnrow" style="margin-top:10px"><button id="goPlan">계획 탭으로</button></div></section>`;
   let body="";
   if(chartMode==="month"){
-    body=`<section class="card"><h2>${y}년 월별 배당</h2>${barChart({labels:months.map((_,i)=>(i+1)+"월"),values:months,target:g})}
-      <div class="legend"><span><i style="background:var(--red)"></i>받은 배당</span>${g?`<span><i style="background:var(--blue)"></i>월 목표</span><span>흐린 막대: 목표 미달</span>`:""}</div></section>`;
+    body=`<section class="card"><h2>${y}년 월별 배당 <small>${basisName()}</small></h2>${barChart({labels:months.map((_,i)=>(i+1)+"월"),values:months,target:hasGoal?goals:0})}
+      <div class="legend"><span><i style="background:var(--red)"></i>받은 배당</span>${hasGoal?`<span><i style="background:var(--blue)"></i>그달 목표</span><span>흐린 막대: 목표 미달</span>`:""}</div></section>`;
   } else if(chartMode==="week"){
-    const wk=byWeek(), m0=monday(now), labels=[], vals=[];
-    for(let i=25;i>=0;i--){ const m=new Date(m0); m.setDate(m.getDate()-7*i); labels.push(fmtD(m)); vals.push(wk.get(isoOf(m))||0); }
-    body=`<section class="card"><h2>최근 26주</h2>${barChart({labels,values:vals,target:g?g*12/52:0,labelEvery:4})}
-      <div class="legend"><span><i style="background:var(--red)"></i>받은 배당</span>${g?`<span><i style="background:var(--blue)"></i>주간 목표 (월 목표×12÷52)</span>`:""}</div></section>`;
-  } else if(chartMode==="cum"){
-    const labels=[], act=[], tgt=[]; let run=0;
-    for(let i=0;i<12;i++){ labels.push((i+1)+"월"); if(i<=now.getMonth()){ run+=months[i]; act.push(run); } else act.push(null); tgt.push(i>=startM? g*(i-startM+1) : null); }
-    const series=[{values:act,color:"var(--red)"}]; if(g) series.push({values:tgt,color:"var(--blue)",dash:true});
-    body=`<section class="card"><h2>${y}년 누적 배당 <small>${won(ytd)}</small></h2>${lineChart({labels,series,labelEvery:2})}
-      <div class="legend"><span><i style="background:var(--red)"></i>실제 누적</span>${g?`<span><i style="background:var(--blue)"></i>목표 누적</span>`:""}</div></section>`;
+    const wk=new Map(); for(const e of S.entries){ const k=weekKey(e.date); wk.set(k,(wk.get(k)||0)+amtOf(e,b)); }
+    const m0=monday(now), labels=[], vals=[], tg=[];
+    for(let i=15;i>=0;i--){ const m=new Date(m0); m.setDate(m.getDate()-7*i); const k=isoOf(m); labels.push(weekLabel(k).replace("주차","주")); vals.push(wk.get(k)||0); tg.push(weekGoal(k)); }
+    body=`<section class="card"><h2>최근 16주 <small>${basisName()}</small></h2>${barChart({labels,values:vals,target:hasGoal?tg:0,labelEvery:3})}
+      <div class="legend"><span><i style="background:var(--red)"></i>받은 배당</span>${hasGoal?`<span><i style="background:var(--blue)"></i>주간 목표 (월 목표×12÷52)</span>`:""}</div></section>`;
   } else {
-    const o={}; for(const e of S.entries){ if(parseD(e.date).getFullYear()===y) o[e.ticker]=(o[e.ticker]||0)+calc(e).netKRW; }
-    body=`<section class="card"><h2>${y}년 종목별 비중</h2>${donut(Object.entries(o).sort((a,b)=>b[1]-a[1]))}</section>`;
+    const labels=[], act=[], tgt=[]; let run=0, trun=0;
+    for(let i=0;i<12;i++){ labels.push((i+1)+"월"); if(i<=cm){ run+=months[i]; act.push(i>=startM||run>0?run:null); } else act.push(null);
+      if(i>=startM){ trun+=goals[i]; tgt.push(trun); } else tgt.push(null); }
+    const series=[{values:act,color:"var(--red)"}]; if(hasGoal) series.push({values:tgt,color:"var(--blue)",dash:true});
+    body=`<section class="card"><h2>${y}년 누적 배당 <small>${basisName()} ${won(months.reduce((a,v)=>a+v,0))}</small></h2>${lineChart({labels,series,labelEvery:2})}
+      <div class="legend"><span><i style="background:var(--red)"></i>실제 누적</span>${hasGoal?`<span><i style="background:var(--blue)"></i>목표 누적</span>`:""}</div></section>`;
   }
   return seg+goalCard+body;
+}
+
+function viewPlan(){
+  const now=new Date(), curYm=ymOf(now.getFullYear(),now.getMonth()), b=basis(), st=S.settings;
+  const plan=[...S.plan].sort((a,c)=>a.ym.localeCompare(c.ym));
+  const head=`<section class="card"><h2>배당 계획 <small>단위: 만원</small></h2>
+    <div class="grid2"><div><label class="f" for="pby">기준 주배당 (%)</label><input id="pby" type="number" inputmode="decimal" step="0.01" value="${st.baseYield}"></div>
+    <div><label class="f">실제 배당 비교 기준</label><div class="seg" id="pbasis"><button data-b="gross" aria-pressed="${b==="gross"}">세전</button><button data-b="net" aria-pressed="${b==="net"}">세후</button></div></div></div>
+    <p class="muted" style="margin:8px 0 0">월 예상 배당 = 원금 × 주배당 × 4주. 계획은 보통 분배율 기준이라 세전 비교를 권해요.</p></section>`;
+  if(!plan.length) return head+`<section class="card"><div class="empty">아직 계획이 없어요.</div><div class="btnrow"><button id="pLoad">예상 배당금 계획 불러오기</button><button class="primary" id="pAdd">월 추가</button></div></section>`;
+  const cur=planOf(curYm), P=portfolio();
+  const curCard = cur ? (()=>{ const a=actualYm(curYm,b); return `<section class="card hero"><div class="label">${now.getMonth()+1}월 계획 · ${basisName()} 기준</div>
+    <div class="big num">${man(a)}<span style="font-size:18px;color:var(--muted)"> / ${cur.expected}만원</span></div>
+    <div class="bar"><span style="width:${Math.min(100,a/(cur.expected*10000)*100)}%"></span></div>
+    <div class="stats" style="margin:14px 0 0">
+      <div class="stat"><div class="k">계획 원금</div><div class="v num">${cur.principal.toLocaleString()}만</div></div>
+      <div class="stat"><div class="k">현재 평가액</div><div class="v num ${P.tVal/10000>=cur.principal?"up":"down"}">${P.tVal?man(P.tVal)+"만":"-"}</div></div>
+    </div>${cur.memo?`<p class="muted" style="margin:10px 0 0">${esc(cur.memo)}</p>`:""}</section>`; })() : "";
+  const labels=plan.map(p=>ymLabel(p.ym)), acts=plan.map(p=>p.ym<=curYm?actualYm(p.ym,b):0), exps=plan.map(p=>p.expected*10000);
+  const rows=plan.map(p=>{ const a=actualYm(p.ym,b), past=p.ym<=curYm, r=p.expected?a/(p.expected*10000)*100:0;
+    return `<tr data-plan="${p.id}"${p.ym===curYm?' class="cur"':""}><td class="l"><b>${ymLabel(p.ym)}</b></td><td>${p.principal.toLocaleString()}</td><td class="l">${esc(p.invest||"")}</td><td>${p.expected}</td><td class="amt">${past?man(a):"-"}</td><td class="${past?(r>=100?"up":"down"):""}">${past&&p.expected?Math.round(r)+"%":"-"}</td><td class="l muted" style="white-space:normal;min-width:150px">${esc(p.memo||"")}</td></tr>`; }).join("");
+  return head+curCard+`
+  <section class="card"><h2>예상 vs 실제 <small>${basisName()}</small></h2>${barChart({labels,values:acts,target:exps,labelEvery:Math.max(1,Math.ceil(plan.length/8))})}
+    <div class="legend"><span><i style="background:var(--red)"></i>실제 배당</span><span><i style="background:var(--blue)"></i>예상 배당</span></div></section>
+  <section class="card" style="padding:0"><div class="tbl"><table><thead><tr><th class="l">월</th><th>원금</th><th class="l">투자</th><th>예상</th><th>실제</th><th>달성</th><th class="l">메모</th></tr></thead><tbody>${rows}</tbody></table></div></section>
+  <p class="muted" style="font-size:12px;margin:-6px 2px 12px">행을 누르면 그달 계획을 고칠 수 있어요.</p>
+  <div class="btnrow"><button class="primary" id="pAdd">월 추가</button><button id="pLoad">PDF 계획 다시 불러오기</button></div>
+  <div class="btnrow" style="margin-top:8px"><button class="danger" id="pClear">계획 전체 삭제</button></div>`;
 }
 
 function viewSet(){
@@ -576,7 +715,9 @@ function viewSet(){
     <p class="muted" style="margin:8px 0 0">휴대폰이 다크 모드면 각 테마의 어두운 버전으로 바뀌어요.</p>
   </section>
   <section class="card"><h2>목표</h2>
-    <label class="f" for="sgoal">월 목표 배당금 (세후, 원)</label><input id="sgoal" type="number" inputmode="numeric" step="1000" value="${st.goalMonthly||""}" placeholder="예: 500000">
+    <label class="f" for="sgoal">기본 월 목표 (계획이 없는 달, 원)</label><input id="sgoal" type="number" inputmode="numeric" step="1000" value="${st.goalMonthly||""}" placeholder="예: 500000">
+    <p class="muted" style="margin:8px 0 0">달마다 다른 목표는 <b>계획</b> 탭에서 정해요.</p>
+    <div class="btnrow" style="margin-top:10px"><button id="goPlan">월별 목표·계획 보기</button></div>
   </section>
   <section class="card"><h2>환율 <small>${st.fxDate?`${fmtD(parseD(st.fxDate))} 자동 갱신`:""}</small></h2>
     <div class="row" style="padding-top:0"><div class="l"><div class="t num">${st.fx.toLocaleString()}원 / $1</div><div class="s">배당 기록은 입금일 환율이 자동으로 적용돼요</div></div><div class="r"><button class="small" id="fxRef">새로고침</button></div></div>
@@ -619,7 +760,7 @@ function viewSet(){
 
 function render(){
   const v=$("#view");
-  v.innerHTML = tab==="home"?viewHome():tab==="log"?viewLog():tab==="hold"?viewHold():tab==="chart"?viewChart():viewSet();
+  v.innerHTML = tab==="home"?viewHome():tab==="log"?viewLog():tab==="hold"?viewHold():tab==="chart"?viewChart():tab==="plan"?viewPlan():viewSet();
   document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-selected", b.dataset.tab===tab));
   $("#fab").hidden = !(tab==="home"||tab==="log");
   bindView(); Drive.setChip();
@@ -757,6 +898,69 @@ function holdSheet(id){
     });
 }
 
+// ---------- plan (예상 배당금 PDF) ----------
+const PDF_PLAN=[
+ ["2026-09",550,"",18,"-8(변동값) · +10(재투자) · 실투자금 평가액 590"],
+ ["2026-10",670,"110+10(배당금)",22,"-10(변동값) · +12(재투자)"],
+ ["2026-11",812,"130+12(배당금)",27,"-10(변동값) · +17(재투자)"],
+ ["2026-12",959,"130+17(배당금)",32,"-20(변동값) · +12(재투자)"],
+ ["2027-01",1101,"130+12(배당금)",37,"-20(변동값) · +17(재투자)"],
+ ["2027-02",1248,"130+17(배당금)",42,"-20(변동값) · +22(재투자)"],
+ ["2027-03",1400,"130+22(배당금)",47,"-20(변동값) · +27(재투자)"],
+ ["2027-04",1557,"130+27(배당금)",52,"-20(변동값) · +32(재투자)"],
+ ["2027-05",1719,"130+32(배당금)",58,"-20(변동값) · +38(재투자)"],
+ ["2027-06",1887,"130+38(배당금)",64,"-20(변동값) · +20(재투자) · +24(QLD)"],
+ ["2027-07",2037,"130+20(배당금)",69,"-20(변동값) · +20(재투자) · +29(QLD)"],
+ ["2027-08",2187,"130+20(배당금)",74,"-20(변동값) · +20(재투자) · +34(QLD)"],
+ ["2027-09",2337,"130+20(배당금)",79,"-20(변동값) · +20(재투자) · +39(QLD)"],
+ ["2027-10",2487,"130+20(배당금)",84,"-20(변동값) · +20(재투자) · +44(QLD)"],
+ ["2027-11",2637,"130+20(배당금)",89,"-20(변동값) · +20(재투자) · +49(QLD)"],
+ ["2027-12",2787,"130+20(배당금)",94,"-20(변동값) · +33(재투자) · +41(QLD 투자)"],
+ ["2028-01",2950,"130+33(배당금)",100,"-20(변동값) · +20(재투자) · +60(QLD 투자)"],
+ ["2028-02",3110,"140+20(배당금)",105,"-20(변동값) · +30(재투자) · +55(QLD 투자)"],
+ ["2028-03",3280,"140+30(배당금)",111,"-20(변동값) · +40(재투자) · +51(QLD 투자)"],
+ ["2028-04",3460,"140+40(배당금)",117,"-20(변동값) · +50(재투자) · +47(QLD)"],
+ ["2028-05",3660,"150+50(배당금)",124,"-20(변동값) · +60(재투자) · +44(QLD)"],
+ ["2028-06",3870,"150+60(배당금)",131,"-20(변동값) · +70(재투자) · +41(QLD)"],
+ ["2028-07",4090,"160+70(배당금)",139,"-20(변동값) · +119(재투자)"],
+ ["2028-08",4369,"160+119(배당금)",148,"-20(변동값) · +50(재투자) · +49(QLD)"],
+ ["2028-09",4569,"150+50(배당금)",155,"FINISH · 포트폴리오 새로 구상"]
+];
+function loadPdfPlan(){
+  const now=Date.now();
+  for(const [ym,principal,invest,expected,memo] of PDF_PLAN){
+    const id="plan-"+ym; S.deleted=S.deleted.filter(x=>x!==id);
+    const rec={id,ym,principal,invest,expected,memo,updated:now};
+    const i=S.plan.findIndex(p=>p.ym===ym); if(i>=0) S.plan[i]=Object.assign(S.plan[i],rec,{id:S.plan[i].id}); else S.plan.push(rec);
+  }
+  S.settings.planSeeded=true;
+}
+function planSheet(id){
+  const p=id?S.plan.find(x=>x.id===id):null;
+  const nextYm=(()=>{ const last=[...S.plan].map(x=>x.ym).sort().pop(); if(!last) return ymOf(new Date().getFullYear(),new Date().getMonth()); const [y,m]=last.split("-").map(Number); return m===12?ymOf(y+1,0):ymOf(y,m); })();
+  openSheet(`<h3>${p?ymLabel(p.ym)+" 계획 수정":"월 계획 추가"}</h3><p class="hint">금액 단위는 만원이에요.</p>
+    <label class="f" for="pym">월</label><input id="pym" type="month" value="${p?p.ym:nextYm}">
+    <div class="grid2"><div><label class="f" for="ppr">원금 (만원)</label><input id="ppr" type="number" inputmode="numeric" value="${p?p.principal:""}"></div>
+    <div><label class="f" for="pex">예상 배당 (만원)</label><input id="pex" type="number" inputmode="decimal" step="any" value="${p?p.expected:""}"></div></div>
+    <div class="btnrow" style="margin-top:8px"><button class="small ghost" id="pauto">원금 × ${S.settings.baseYield}% × 4로 계산</button></div>
+    <label class="f" for="pin">투자 (예: 130+12(배당금))</label><input id="pin" value="${esc(p?p.invest:"")}">
+    <label class="f" for="pme">메모 (변동값, 재투자, QLD 등)</label><input id="pme" value="${esc(p?p.memo:"")}">
+    <div class="btnrow" style="margin-top:14px">${p?`<button class="danger" id="pdel">삭제</button>`:""}<button class="ghost" id="pcx">취소</button><button class="primary" id="psv">저장</button></div>`, ()=>{
+      $("#pauto").onclick=()=>{ const pr=+$("#ppr").value||0; $("#pex").value=Math.floor(pr*S.settings.baseYield/100*4); };
+      $("#pcx").onclick=closeSheet;
+      if(p) $("#pdel").onclick=()=>{ if(!confirm("이 달 계획을 삭제할까요?")) return; S.plan=S.plan.filter(x=>x.id!==p.id); markDeleted(p.id); persist(); closeSheet(); };
+      $("#psv").onclick=()=>{
+        const ym=$("#pym").value, pr=+$("#ppr").value, ex=+$("#pex").value;
+        if(!/^\d{4}-\d{2}$/.test(ym)||!(ex>0)){ toast("월과 예상 배당을 입력해 주세요"); return; }
+        const dup=S.plan.find(x=>x.ym===ym && (!p||x.id!==p.id)); if(dup){ toast("이미 그 달 계획이 있어요"); return; }
+        const rec={ym,principal:pr||0,expected:ex,invest:$("#pin").value.trim(),memo:$("#pme").value.trim(),updated:Date.now()};
+        if(p) Object.assign(p,rec); else S.plan.push(Object.assign({id:"plan-"+ym},rec));
+        S.deleted=S.deleted.filter(x=>x!=="plan-"+ym||(p&&p.id===x));
+        persist(); closeSheet(); toast("저장했어요");
+      };
+    });
+}
+
 // ---------- files ----------
 function saveFile(name,text,type){
   const blob=new Blob([text],{type}), url=URL.createObjectURL(blob), a=document.createElement("a");
@@ -775,7 +979,16 @@ function bindView(){
   const v=$("#view"), on=(sel,fn)=>{ const el=v.querySelector(sel); if(el) el.onclick=fn; };
   v.querySelectorAll("[data-edit]").forEach(r=>r.onclick=()=>entrySheet(r.dataset.edit));
   v.querySelectorAll("[data-hold]").forEach(r=>r.onclick=()=>holdSheet(r.dataset.hold));
-  on("#addOne",()=>entrySheet()); on("#addHold",()=>holdSheet());
+  on("#addOne",()=>entrySheet()); on("#addHold",()=>holdSheet()); on("#csvLog",exportCSV);
+  const ls=v.querySelector("#lseg"); if(ls) ls.onclick=ev=>{ const b=ev.target.closest("button"); if(b){ logMode=b.dataset.m; render(); } };
+  const tc=v.querySelector("#tchips"); if(tc) tc.onclick=ev=>{ const b=ev.target.closest("button"); if(b){ tickerSel=b.dataset.t; render(); } };
+  v.querySelectorAll("[data-plan]").forEach(r=>r.onclick=()=>planSheet(r.dataset.plan));
+  on("#goPlan",()=>{ tab="plan"; render(); window.scrollTo(0,0); });
+  on("#pAdd",()=>planSheet());
+  on("#pLoad",()=>{ if(S.plan.length && !confirm("PDF 계획(2026.9~2028.9)을 다시 불러올까요? 같은 달 계획은 PDF 내용으로 바뀌어요.")) return; loadPdfPlan(); persist(); render(); toast("계획을 불러왔어요"); });
+  on("#pClear",()=>{ if(!confirm("계획을 모두 삭제할까요?")) return; S.plan.forEach(x=>markDeleted(x.id)); S.plan=[]; persist(); render(); });
+  const pb=v.querySelector("#pbasis"); if(pb) pb.onclick=ev=>{ const b=ev.target.closest("button"); if(b){ S.settings.goalBasis=b.dataset.b; touchSettings(); persist(); render(); } };
+  const py=v.querySelector("#pby"); if(py) py.onchange=()=>{ const n=+py.value; if(n>0){ S.settings.baseYield=n; touchSettings(); persist(); toast("기준 주배당을 저장했어요"); } };
   on("#refQ",async()=>{ toast("주가를 불러오는 중…"); if(await refreshQuotes(true)) toast("주가를 새로 불러왔어요"); });
   const cs=v.querySelector("#cseg"); if(cs) cs.onclick=ev=>{ const b=ev.target.closest("button"); if(b){ chartMode=b.dataset.m; render(); } };
   on("#goGoal",()=>{ tab="set"; render(); setTimeout(()=>{ const g=$("#sgoal"); g&&g.focus(); },50); });
@@ -810,6 +1023,7 @@ $("#syncChip").onclick=()=>{ if(S.settings.gLinked||S.settings.gClientId) Drive.
 // ---------- start ----------
 async function backgroundWork(){ await refreshTodayFx(); await backfillFx(); await refreshQuotes(false); await backfillPrices(); }
 loadLocal();
+if(!S.settings.planSeeded && !S.plan.length){ loadPdfPlan(); saveLocal(); }
 render();
 backgroundWork();
 window.addEventListener("online", ()=>{ backgroundWork(); if(Drive.ready()) Drive.sync(false); });
